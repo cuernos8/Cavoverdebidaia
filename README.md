@@ -1,0 +1,2 @@
+# Cavoverdebidaia
+Bidaiaren Arautegia 
