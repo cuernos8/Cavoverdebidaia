@@ -388,6 +388,7 @@ footer.site-footer .hand{font-family:var(--font-hand); font-size:1.3rem; color:v
       <button role="tab" id="tab-btn-portada" aria-controls="panel-portada" aria-selected="true" data-tab="portada">🛫 Embarque</button>
       <button role="tab" id="tab-btn-itinerario" aria-controls="panel-itinerario" aria-selected="false" data-tab="itinerario" tabindex="-1">🗺️ Itinerario</button>
       <button role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
+      <button role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
     </nav>
   </div>
 </header>
@@ -420,7 +421,7 @@ footer.site-footer .hand{font-family:var(--font-hand); font-size:1.3rem; color:v
 
       <div class="boarding-pass">
         <div class="bp-main">
-          <div class="bp-route"><span class="plane">✈</span> BARAKALDO &nbsp;→&nbsp; CABO VERDE</div>
+          <div class="bp-route"><span class="plane">✈</span> EUSKAL HERRIA &nbsp;→&nbsp; CABO VERDE</div>
           <div class="bp-row">
             <div class="bp-field"><span class="lbl">VUELO</span><span class="val">BIDAIA Nº1</span></div>
             <div class="bp-field"><span class="lbl">FECHA</span><span class="val">05 AGO 2026</span></div>
@@ -468,18 +469,6 @@ footer.site-footer .hand{font-family:var(--font-hand); font-size:1.3rem; color:v
 
     <ul class="timeline" id="itin-list"></ul>
 
-    <div class="budget-card">
-      <h3>💶 Presupuesto inicial estimado</h3>
-      <p class="sub">Con los datos antes de viajar — sujeto a cambios</p>
-      <div class="table-scroll">
-        <table class="budget">
-          <thead><tr><th>Concepto</th><th>Total</th><th>Por persona</th></tr></thead>
-          <tbody id="budget-body"></tbody>
-          <tfoot><tr><td>Estimado por persona</td><td></td><td>≈ 1.141,66 €</td></tr></tfoot>
-        </table>
-      </div>
-      <p class="budget-note">* No incluye SIM ni gastos del día a día. Cifras de antes de viajar, pueden variar.</p>
-    </div>
   </section>
 
   <!-- ============ CHECKLIST ============ -->
@@ -501,6 +490,27 @@ footer.site-footer .hand{font-family:var(--font-hand); font-size:1.3rem; color:v
     <div class="checklist-grid" id="checklist-grid"></div>
   </section>
 
+  <!-- ============ PRESUPUESTO ============ -->
+  <section class="panel" id="panel-presupuesto" role="tabpanel" aria-labelledby="tab-btn-presupuesto" hidden>
+    <div class="section-head">
+      <h2>💶 Presupuesto</h2>
+      <p>Estimación inicial antes del viaje — sujeto a cambios</p>
+    </div>
+
+    <div class="budget-card" style="margin-top:0;">
+      <h3>💶 Presupuesto inicial estimado</h3>
+      <p class="sub">Con los datos antes de viajar — sujeto a cambios</p>
+      <div class="table-scroll">
+        <table class="budget">
+          <thead><tr><th>Concepto</th><th>Total</th><th>Por persona</th></tr></thead>
+          <tbody id="budget-body"></tbody>
+          <tfoot><tr><td>Estimado por persona</td><td></td><td>≈ 1.141,66 €</td></tr></tfoot>
+        </table>
+      </div>
+      <p class="budget-note">* No incluye SIM ni gastos del día a día. Cifras de antes de viajar, pueden variar.</p>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
@@ -515,9 +525,9 @@ footer.site-footer .hand{font-family:var(--font-hand); font-size:1.3rem; color:v
    DATA
    ============================================================ */
 const ITINERARY = [
-  { day:1, date:'Mié 5 Ago', country:'portugal', kind:'🚗 Viaje', route:'Barakaldo → Salamanca → Donas',
+  { day:1, date:'Mié 5 Ago', country:'portugal', kind:'🚗 Viaje', route:'Euskal Herria → Salamanca → Donas',
     legs:[
-      {icon:'🚗', text:'Barakaldo → Salamanca', meta:'4h'},
+      {icon:'🚗', text:'Euskal Herria → Salamanca', meta:'4h'},
       {icon:'🚗', text:'Salamanca → Donas', meta:'2h 11min'}
     ],
     note:'Paramos en Salamanca a comer y a verla un poco, y luego hacia Guarda a pasar la noche.',
@@ -621,9 +631,9 @@ const ITINERARY = [
     ],
     hotel:{name:'Amelia by Gaiarooms', place:'Salamanca', price:'80,10€ total (16€ p.p.)', status:'Pendiente — Ira'}
   },
-  { day:14, date:'Mar 18 Ago', country:'espana', kind:'🏠 Vuelta a casa', route:'Salamanca → Barakaldo',
+  { day:14, date:'Mar 18 Ago', country:'espana', kind:'🏠 Vuelta a casa', route:'Salamanca → Euskal Herria',
     legs:[
-      {icon:'🚗', text:'Salamanca → Barakaldo', meta:'3h 40min'}
+      {icon:'🚗', text:'Salamanca → Euskal Herria', meta:'3h 40min'}
     ],
     note:'Fin del viaje — ¡a casa! 🏠'
   }
@@ -738,7 +748,8 @@ const tabButtons = Array.from(document.querySelectorAll('nav.tabs button'));
 const panels = {
   portada: document.getElementById('panel-portada'),
   itinerario: document.getElementById('panel-itinerario'),
-  checklist: document.getElementById('panel-checklist')
+  checklist: document.getElementById('panel-checklist'),
+  presupuesto: document.getElementById('panel-presupuesto')
 };
 function activateTab(name){
   tabButtons.forEach(btn=>{
