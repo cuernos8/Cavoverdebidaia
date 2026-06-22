@@ -263,6 +263,15 @@ footer.site-footer .hand{font-family:var(--font-hand);font-size:1.3rem;color:var
       <button role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
       <button role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
       <button role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
+      <button
+         role="tab"
+         id="tab-btn-competicion"
+         aria-controls="panel-competicion"
+         aria-selected="false"
+         data-tab="competicion"
+         tabindex="-1">
+        🏆 Competición
+     </button>
     </nav>
   </div>
 </header>
@@ -390,22 +399,66 @@ footer.site-footer .hand{font-family:var(--font-hand);font-size:1.3rem;color:var
       </div>
       <p class="budget-note">* No incluye SIM ni gastos del día a día. Cifras antes de viajar, pueden variar.</p>
     </div>
-  </section>
- <!-- ============================================================
-     WIDGET DE TIEMPO - CABO VERDE (Sal Island)
-     ============================================================
-     INSTRUCCIONES DE INSTALACIÓN:
-     
-     1. Abre tu archivo HTML en un editor de texto (Notepad, VS Code, etc.)
-     2. Busca la sección donde quieras poner el widget (por ejemplo,
-        justo después del encabezado de "Cabo Verde" o antes del footer)
-     3. Copia TODO el contenido de este archivo y pégalo en ese lugar
-     4. Guarda y abre tu HTML en el navegador — ¡listo!
-     
-     NOTA: Necesitas conexión a internet para que carguen los datos.
-     Los datos vienen de Open-Meteo y la NOAA (gratuito, sin registro).
-     ============================================================ -->
+  </section> 
+  .competition-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+}
 
+.competition-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.cabo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+}
+
+.cabo-grid span{
+    background:var(--teal-tint);
+    padding:10px;
+    border-radius:10px;
+}
+
+.daily-winner{
+    background:var(--gold-tint);
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+}
+
+.ranking-player{
+    margin-bottom:18px;
+}
+
+.ranking-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+}
+
+.progress{
+    height:16px;
+    background:#ddd;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        var(--gold),
+        var(--coral)
+    );
+}
 <style>
   .cv-widget {
     font-family: system-ui, -apple-system, sans-serif;
@@ -717,6 +770,105 @@ footer.site-footer .hand{font-family:var(--font-hand);font-size:1.3rem;color:var
     });
 })();
 </script>
+<section
+    class="panel"
+    id="panel-competicion"
+    role="tabpanel"
+    aria-labelledby="tab-btn-competicion">
+
+    <div class="section-head">
+        <h2>🏆 Competición entre amigas</h2>
+        <p>
+            Cada día del viaje se pueden ganar puntos realizando retos,
+            descubriendo lugares o protagonizando momentos memorables.
+        </p>
+    </div>
+
+    <div class="competition-card">
+        <h3>👭 Participantes</h3>
+
+        <div class="crew-chips">
+            <span>✨ Andrea</span>
+            <span>🌟 Ira</span>
+            <span>🌺 Oihane</span>
+            <span>🌸 Ire</span>
+            <span>🦋 Ilargi</span>
+        </div>
+    </div>
+
+    <div class="competition-card">
+        <h3>📊 Ranking General</h3>
+
+        <div id="ranking-container"></div>
+    </div>
+
+    <div class="competition-grid">
+
+        <div class="competition-card">
+            <h3>🎯 Retos diarios</h3>
+
+            <ul>
+                <li>🏊 Primera en bañarse (+5)</li>
+                <li>📸 Mejor foto del día (+3)</li>
+                <li>🧠 Encontrar un dato curioso (+3)</li>
+                <li>🍴 Probar comida local nueva (+2)</li>
+                <li>😂 Hacer reír al grupo (+2)</li>
+                <li>✅ Completar todos los planes del día (+2)</li>
+                <li>🏆 MVP del día (+5)</li>
+            </ul>
+        </div>
+
+        <div class="competition-card">
+            <h3>😂 Puntos especiales</h3>
+
+            <ul>
+                <li>🤸 Caída épica sin daños (+1)</li>
+                <li>🎤 Frase legendaria (+2)</li>
+                <li>😴 Dormirse en el coche (+1)</li>
+                <li>🧭 Confundirse de dirección (-2)</li>
+                <li>🎒 Olvidar algo importante (-3)</li>
+                <li>🚶 Perderse (-2)</li>
+                <li>⏰ Llegar tarde (-1)</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="competition-card">
+
+        <h3>🌴 Retos Exclusivos Cabo Verde</h3>
+
+        <div class="cabo-grid">
+            <span>🐢 Ver tortugas (+5)</span>
+            <span>🍲 Probar cachupa (+3)</span>
+            <span>💃 Bailar música caboverdiana (+4)</span>
+            <span>🗣️ Aprender una palabra local (+2)</span>
+            <span>🐐 Foto con una cabra (+2)</span>
+            <span>🌅 Ver amanecer (+3)</span>
+            <span>🌇 Ver atardecer (+3)</span>
+        </div>
+
+    </div>
+
+    <div class="competition-card">
+
+        <h3>🏆 Hall of Fame Diario</h3>
+
+        <div class="daily-winner">
+
+            <h4>🏆 MVP DEL DÍA</h4>
+            <p>🌺 Oihane - 11 puntos</p>
+
+            <h4>😂 Momento legendario</h4>
+            <p>"Intentó abrir un coche que no era el nuestro"</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+  
 </main>
 
 <footer class="site-footer">
@@ -1104,7 +1256,8 @@ const panels = {
   itinerario: document.getElementById('panel-itinerario'),
   checklist: document.getElementById('panel-checklist'),
   presupuesto: document.getElementById('panel-presupuesto'),
-  tiempo: document.getElementById('panel-tiempo')
+  tiempo: document.getElementById('panel-tiempo'),
+  competicion: document.getElementById('panel-competicion')
 };
 function activateTab(name){
   tabButtons.forEach(btn=>{
@@ -1289,6 +1442,46 @@ function updateProgress(){
     updateProgress();
   });
 })();
+</script>
+  <script>
+
+const players = [
+  {name:"🦋 Ilargi", points:42},
+  {name:"🌺 Oihane", points:39},
+  {name:"✨ Andrea", points:35},
+  {name:"🌟 Ira", points:31},
+  {name:"🌸 Ire", points:28}
+];
+
+const ranking = document.getElementById("ranking-container");
+
+if(ranking){
+
+  const maxPoints = Math.max(...players.map(p => p.points));
+
+  players.forEach(player => {
+
+    ranking.innerHTML += `
+      <div class="ranking-player">
+
+        <div class="ranking-header">
+          <span>${player.name}</span>
+          <strong>${player.points} pts</strong>
+        </div>
+
+        <div class="progress">
+          <div
+            class="progress-bar"
+            style="width:${(player.points/maxPoints)*100}%">
+          </div>
+        </div>
+
+      </div>
+    `;
+  });
+
+}
+
 </script>
 </body>
 </html>
