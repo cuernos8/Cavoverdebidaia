@@ -1,0 +1,326 @@
+<!-- ============================================================
+     WIDGET DE TIEMPO - CABO VERDE (Sal Island)
+     ============================================================
+     INSTRUCCIONES DE INSTALACIÓN:
+     
+     1. Abre tu archivo HTML en un editor de texto (Notepad, VS Code, etc.)
+     2. Busca la sección donde quieras poner el widget (por ejemplo,
+        justo después del encabezado de "Cabo Verde" o antes del footer)
+     3. Copia TODO el contenido de este archivo y pégalo en ese lugar
+     4. Guarda y abre tu HTML en el navegador — ¡listo!
+     
+     NOTA: Necesitas conexión a internet para que carguen los datos.
+     Los datos vienen de Open-Meteo y la NOAA (gratuito, sin registro).
+     ============================================================ -->
+
+<style>
+  .cv-widget {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #1a2e3b;
+  }
+  .cv-widget * { box-sizing: border-box; }
+
+  .cv-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .cv-header-icon {
+    width: 36px; height: 36px;
+    background: #1a6b8a;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px;
+  }
+  .cv-header h2 {
+    margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a2e3b;
+  }
+  .cv-header p {
+    margin: 0; font-size: 0.78rem; color: #5a7a8a;
+  }
+  .cv-updated {
+    margin-left: auto; font-size: 0.72rem; color: #5a7a8a;
+  }
+
+  /* Tarjeta actual */
+  .cv-current {
+    background: linear-gradient(135deg, #1a6b8a 0%, #0d4a63 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .cv-temp-block { display: flex; flex-direction: column; }
+  .cv-temp-main {
+    font-size: 3.5rem; font-weight: 700; line-height: 1;
+    letter-spacing: -2px;
+  }
+  .cv-temp-feel { font-size: 0.8rem; opacity: 0.75; margin-top: 4px; }
+  .cv-condition { font-size: 1rem; font-weight: 500; margin-top: 6px; }
+  .cv-icon-big { font-size: 3rem; line-height: 1; }
+  .cv-humidity { font-size: 0.8rem; opacity: 0.75; margin-top: 4px; }
+
+  /* Tarjetas secundarias */
+  .cv-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .cv-card {
+    background: #fff;
+    border: 1px solid #e0eaef;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+  .cv-card-label {
+    font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.05em; color: #5a7a8a; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .cv-card-value {
+    font-size: 1.4rem; font-weight: 700; color: #1a2e3b; line-height: 1;
+  }
+  .cv-card-sub {
+    font-size: 0.78rem; color: #5a7a8a; margin-top: 4px;
+  }
+  .cv-sea-badge {
+    display: inline-block; padding: 3px 8px;
+    border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+    margin-top: 6px;
+  }
+  .cv-sea-calm { background: #d4f5e0; color: #1a6b3a; }
+  .cv-sea-moderate { background: #fff3cd; color: #7a5200; }
+  .cv-sea-rough { background: #fde8e8; color: #8b1a1a; }
+
+  /* Pronóstico 7 días */
+  .cv-forecast-title {
+    font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.07em; color: #5a7a8a;
+    margin: 0 0 0.6rem;
+  }
+  .cv-forecast {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .cv-day {
+    background: #fff;
+    border: 1px solid #e0eaef;
+    border-radius: 10px;
+    padding: 0.6rem 0.3rem;
+    text-align: center;
+  }
+  .cv-day-name { font-size: 0.7rem; color: #5a7a8a; font-weight: 600; }
+  .cv-day-icon { font-size: 1.4rem; margin: 4px 0; }
+  .cv-day-max { font-size: 0.85rem; font-weight: 700; color: #1a2e3b; }
+  .cv-day-min { font-size: 0.75rem; color: #7a9aaa; }
+  .cv-day-rain { font-size: 0.65rem; color: #4a8fbf; margin-top: 2px; }
+
+  .cv-loading {
+    text-align: center; padding: 2rem;
+    color: #5a7a8a; font-size: 0.9rem;
+  }
+  .cv-error {
+    background: #fde8e8; border: 1px solid #f5c0c0;
+    border-radius: 12px; padding: 1rem;
+    color: #8b1a1a; font-size: 0.85rem; text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    .cv-current { grid-template-columns: 1fr; gap: 0.5rem; }
+    .cv-forecast { grid-template-columns: repeat(4, 1fr); }
+    .cv-forecast .cv-day:nth-child(n+5) { display: none; }
+    .cv-temp-main { font-size: 2.8rem; }
+  }
+</style>
+
+<div class="cv-widget" id="caboverde-weather">
+  <div class="cv-header">
+    <div class="cv-header-icon">🌊</div>
+    <div>
+      <h2>Tiempo en Cabo Verde</h2>
+      <p>Ilha do Sal · Datos en tiempo real</p>
+    </div>
+    <span class="cv-updated" id="cv-updated-time"></span>
+  </div>
+  <div id="cv-content">
+    <div class="cv-loading">⏳ Cargando datos meteorológicos...</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Coordenadas de Ilha do Sal, Cabo Verde
+  const LAT = 16.73, LON = -22.94;
+
+  const WEATHER_CODES = {
+    0:'Despejado', 1:'Mayormente despejado', 2:'Parcialmente nublado',
+    3:'Nublado', 45:'Niebla', 48:'Niebla helada',
+    51:'Llovizna ligera', 53:'Llovizna', 55:'Llovizna intensa',
+    61:'Lluvia ligera', 63:'Lluvia', 65:'Lluvia fuerte',
+    71:'Nieve ligera', 73:'Nieve', 75:'Nieve intensa',
+    80:'Chubascos ligeros', 81:'Chubascos', 82:'Chubascos fuertes',
+    95:'Tormenta', 96:'Tormenta con granizo', 99:'Tormenta intensa'
+  };
+
+  const WEATHER_ICONS = {
+    0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️', 45:'🌫️', 48:'🌫️',
+    51:'🌦️', 53:'🌦️', 55:'🌧️', 61:'🌦️', 63:'🌧️', 65:'🌧️',
+    71:'🌨️', 73:'🌨️', 75:'❄️', 80:'🌧️', 81:'🌧️', 82:'⛈️',
+    95:'⛈️', 96:'⛈️', 99:'⛈️'
+  };
+
+  const WIND_DIRS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+
+  function windDir(deg) {
+    return WIND_DIRS[Math.round(deg / 22.5) % 16];
+  }
+
+  function beaufort(ms) {
+    const kmh = ms * 3.6;
+    if (kmh < 1)  return {b:0, desc:'Calma'};
+    if (kmh < 6)  return {b:1, desc:'Ventolina'};
+    if (kmh < 12) return {b:2, desc:'Brisa muy débil'};
+    if (kmh < 20) return {b:3, desc:'Brisa débil'};
+    if (kmh < 29) return {b:4, desc:'Brisa moderada'};
+    if (kmh < 39) return {b:5, desc:'Brisa fresca'};
+    if (kmh < 50) return {b:6, desc:'Brisa fuerte'};
+    if (kmh < 62) return {b:7, desc:'Viento fuerte'};
+    return {b:8, desc:'Temporal'};
+  }
+
+  function seaState(waveH) {
+    if (waveH < 0.5) return {cls:'cv-sea-calm', label:'Mar llana (' + waveH.toFixed(1) + 'm)'};
+    if (waveH < 1.25) return {cls:'cv-sea-calm', label:'Mar rizada (' + waveH.toFixed(1) + 'm)'};
+    if (waveH < 2.5) return {cls:'cv-sea-moderate', label:'Mar poco agitada (' + waveH.toFixed(1) + 'm)'};
+    if (waveH < 4.0) return {cls:'cv-sea-moderate', label:'Mar agitada (' + waveH.toFixed(1) + 'm)'};
+    return {cls:'cv-sea-rough', label:'Mar gruesa (' + waveH.toFixed(1) + 'm)'};
+  }
+
+  function dayName(dateStr, i) {
+    if (i === 0) return 'Hoy';
+    if (i === 1) return 'Mañana';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('es-ES', {weekday:'short'}).replace('.','');
+  }
+
+  async function loadWeather() {
+    const url = 'https://api.open-meteo.com/v1/forecast?' + [
+      'latitude=' + LAT, 'longitude=' + LON,
+      'current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m',
+      'daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
+      'wind_speed_unit=ms',
+      'forecast_days=7',
+      'timezone=Atlantic%2FCape_Verde'
+    ].join('&');
+
+    const marineUrl = 'https://marine-api.open-meteo.com/v1/marine?' + [
+      'latitude=' + LAT, 'longitude=' + LON,
+      'current=wave_height,wave_direction,wave_period',
+      'timezone=Atlantic%2FCape_Verde'
+    ].join('&');
+
+    const [wRes, mRes] = await Promise.all([fetch(url), fetch(marineUrl)]);
+    const [w, m] = await Promise.all([wRes.json(), mRes.json()]);
+    return {w, m};
+  }
+
+  function render(w, m) {
+    const c = w.current;
+    const d = w.daily;
+    const mc = m.current || {};
+
+    const code = c.weather_code;
+    const icon = WEATHER_ICONS[code] || '🌡️';
+    const desc = WEATHER_CODES[code] || 'Variable';
+    const wf = beaufort(c.wind_speed_10m);
+    const waveH = mc.wave_height != null ? mc.wave_height : null;
+    const sea = waveH !== null ? seaState(waveH) : null;
+
+    const now = new Date();
+    document.getElementById('cv-updated-time').textContent =
+      'Act. ' + now.toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
+
+    // Pronóstico
+    let forecastHTML = '';
+    for (let i = 0; i < 7; i++) {
+      const fi = WEATHER_ICONS[d.weather_code[i]] || '🌡️';
+      const rain = d.precipitation_probability_max[i];
+      forecastHTML += `
+        <div class="cv-day">
+          <div class="cv-day-name">${dayName(d.time[i], i)}</div>
+          <div class="cv-day-icon">${fi}</div>
+          <div class="cv-day-max">${Math.round(d.temperature_2m_max[i])}°</div>
+          <div class="cv-day-min">${Math.round(d.temperature_2m_min[i])}°</div>
+          ${rain > 10 ? `<div class="cv-day-rain">💧${rain}%</div>` : ''}
+        </div>`;
+    }
+
+    const seaCardHTML = sea ? `
+      <div class="cv-card">
+        <div class="cv-card-label">🌊 Estado del mar</div>
+        <div class="cv-card-value">${waveH.toFixed(1)} m</div>
+        <div><span class="cv-sea-badge ${sea.cls}">${sea.label}</span></div>
+        ${mc.wave_period ? `<div class="cv-card-sub">Período ${mc.wave_period.toFixed(0)}s · ${mc.wave_direction != null ? windDir(mc.wave_direction) : ''}</div>` : ''}
+      </div>` : `
+      <div class="cv-card">
+        <div class="cv-card-label">🌊 Estado del mar</div>
+        <div class="cv-card-value" style="font-size:0.95rem">No disponible</div>
+        <div class="cv-card-sub">Datos marinos no cargados</div>
+      </div>`;
+
+    document.getElementById('cv-content').innerHTML = `
+      <div class="cv-current">
+        <div class="cv-temp-block">
+          <div class="cv-temp-main">${Math.round(c.temperature_2m)}°C</div>
+          <div class="cv-condition">${desc}</div>
+          <div class="cv-temp-feel">Sensación ${Math.round(c.apparent_temperature)}°C</div>
+          <div class="cv-humidity">💧 Humedad ${c.relative_humidity_2m}%</div>
+        </div>
+        <div style="text-align:right">
+          <div class="cv-icon-big">${icon}</div>
+          <div style="font-size:0.8rem; opacity:0.8; margin-top:8px">
+            Ilha do Sal<br>Cabo Verde
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-cards">
+        <div class="cv-card">
+          <div class="cv-card-label">💨 Viento</div>
+          <div class="cv-card-value">${Math.round(c.wind_speed_10m * 3.6)} km/h</div>
+          <div class="cv-card-sub">Dirección ${windDir(c.wind_direction_10m)} · Beaufort ${wf.b}</div>
+          <div class="cv-card-sub">${wf.desc}</div>
+          ${c.wind_gusts_10m ? `<div class="cv-card-sub">Ráfagas ${Math.round(c.wind_gusts_10m * 3.6)} km/h</div>` : ''}
+        </div>
+        ${seaCardHTML}
+        <div class="cv-card">
+          <div class="cv-card-label">🌡️ Temperatura</div>
+          <div class="cv-card-value">${Math.round(c.temperature_2m)}°C</div>
+          <div class="cv-card-sub">Máx hoy ${Math.round(d.temperature_2m_max[0])}° / Mín ${Math.round(d.temperature_2m_min[0])}°</div>
+          <div class="cv-card-sub">Sensación ${Math.round(c.apparent_temperature)}°C</div>
+        </div>
+      </div>
+
+      <p class="cv-forecast-title">Pronóstico 7 días</p>
+      <div class="cv-forecast">${forecastHTML}</div>
+    `;
+  }
+
+  loadWeather()
+    .then(({w, m}) => render(w, m))
+    .catch(err => {
+      document.getElementById('cv-content').innerHTML =
+        `<div class="cv-error">⚠️ No se pudieron cargar los datos del tiempo.<br>
+        Comprueba tu conexión a internet.<br><small>${err.message}</small></div>`;
+    });
+})();
+</script>
