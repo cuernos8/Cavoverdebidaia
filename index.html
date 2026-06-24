@@ -526,6 +526,33 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
   }
 }
   
+
+/* Header dropdown navigation */
+.main-nav{align-items:center;overflow:visible!important;}
+.main-nav > [role="tab"]{flex:0 0 auto;}
+.tabs-dropdown{position:relative;flex:0 0 auto;}
+.tabs-dropdown-toggle{
+  border:none;background:var(--ink);color:var(--gold-tint);cursor:pointer;
+  padding:8px 14px;border-radius:11px;font-size:.86rem;font-weight:800;
+  display:flex;align-items:center;gap:8px;box-shadow:0 3px 10px -4px rgba(32,48,61,.4);
+}
+.tabs-dropdown-toggle span{font-family:var(--font-mono);font-size:.68rem;color:#fff;opacity:.85;}
+.tabs-dropdown-menu{
+  position:absolute;right:0;top:calc(100% + 8px);width:min(280px, calc(100vw - 24px));
+  background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:8px;z-index:120;
+}
+.tabs-dropdown-menu[hidden]{display:none!important;}
+.tabs-dropdown-menu button{width:100%;justify-content:flex-start;text-align:left;margin-bottom:4px;}
+.tabs-dropdown-menu button:last-child{margin-bottom:0;}
+.tabs-dropdown-menu button[aria-selected="true"]{background:var(--teal-tint);color:var(--teal-deep);}
+@media(max-width:760px){
+  .main-nav{display:flex!important;gap:6px;overflow:visible!important;}
+  .tabs-dropdown{flex:1 1 auto;}
+  .tabs-dropdown-toggle{width:100%;justify-content:space-between;font-size:.8rem;padding:8px 11px;}
+  .tabs-dropdown-menu{left:0;right:auto;width:100%;min-width:220px;}
+}
+@media(max-width:420px){.tabs-dropdown-toggle span{display:none;}}
+
 </style>
 </head>
 <body>
@@ -536,22 +563,23 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
       <div class="brand"><span class="flag">🏝️</span> Cabo Verde Bidaia</div>
       <div class="mini-countdown" id="mini-cd" title="Días para el despegue">🛫 <b id="mini-cd-days">--</b> días</div>
     </div>
-    <nav class="tabs" role="tablist" aria-label="Secciones">
+    <nav class="tabs main-nav" aria-label="Secciones">
       <button role="tab" id="tab-btn-portada" aria-controls="panel-portada" aria-selected="true" data-tab="portada">🛫 Embarque</button>
-      <button role="tab" id="tab-btn-itinerario" aria-controls="panel-itinerario" aria-selected="false" data-tab="itinerario" tabindex="-1">🗺️ Itinerario</button>
-      <button role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
-      <button role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
-      <button role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
-      <button
-         role="tab"
-         id="tab-btn-competicion"
-         aria-controls="panel-competicion"
-         aria-selected="false"
-         data-tab="competicion"
-         tabindex="-1">
-        🏆 Competición
-     </button>
-      <button role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
+
+      <div class="tabs-dropdown">
+        <button type="button" class="tabs-dropdown-toggle" id="tabs-dropdown-toggle" aria-expanded="false" aria-controls="tabs-dropdown-menu">
+          ☰ Secciones
+          <span id="tabs-current-label">Itinerario</span>
+        </button>
+        <div class="tabs-dropdown-menu" id="tabs-dropdown-menu" hidden>
+          <button role="tab" id="tab-btn-itinerario" aria-controls="panel-itinerario" aria-selected="false" data-tab="itinerario" tabindex="-1">🗺️ Itinerario</button>
+          <button role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
+          <button role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
+          <button role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
+          <button role="tab" id="tab-btn-competicion" aria-controls="panel-competicion" aria-selected="false" data-tab="competicion" tabindex="-1">🏆 Competición</button>
+          <button role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
@@ -1271,17 +1299,49 @@ const CHECKLIST = [
 /* ============================================================
    TABS
    ============================================================ */
-const tabButtons = Array.from(document.querySelectorAll('nav.tabs button'));
+const tabButtons = Array.from(document.querySelectorAll('nav.tabs [role="tab"]'));
 const panels = {
   portada: document.getElementById('panel-portada'),
   itinerario: document.getElementById('panel-itinerario'),
   checklist: document.getElementById('panel-checklist'),
   presupuesto: document.getElementById('panel-presupuesto'),
   tiempo: document.getElementById('panel-tiempo'),
-  competicion: document.getElementById('panel-competicion')
+  competicion: document.getElementById('panel-competicion'),
+  colorchallenge: document.getElementById('panel-colorchallenge')
 };
+const dropdownToggle = document.getElementById('tabs-dropdown-toggle');
+const dropdownMenu = document.getElementById('tabs-dropdown-menu');
+function closeTabsDropdown(){
+  if(dropdownToggle && dropdownMenu){
+    dropdownToggle.setAttribute('aria-expanded','false');
+    dropdownMenu.hidden = true;
+  }
+}
+function toggleTabsDropdown(){
+  if(!dropdownToggle || !dropdownMenu) return;
+  const willOpen = dropdownMenu.hidden;
+  dropdownMenu.hidden = !willOpen;
+  dropdownToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+}
+dropdownToggle?.addEventListener('click', toggleTabsDropdown);
+document.addEventListener('click', (event)=>{
+  if(!event.target.closest('.tabs-dropdown')) closeTabsDropdown();
+});
+document.addEventListener('keydown', (event)=>{
+  if(event.key === 'Escape') closeTabsDropdown();
+});
+
 function activateTab(name){
   if(!panels[name]) name='portada';
+  const labels = {
+    portada:'Embarque',
+    itinerario:'Itinerario',
+    checklist:'Maleta',
+    presupuesto:'Presupuesto',
+    tiempo:'Tiempo',
+    competicion:'Competición',
+    colorchallenge:'Color Challenge'
+  };
   tabButtons.forEach(btn=>{
     const isSel = btn.dataset.tab === name;
     btn.setAttribute('aria-selected', isSel ? 'true':'false');
@@ -1292,10 +1352,13 @@ function activateTab(name){
     if(key===name){panel.hidden=false;panel.classList.add('active');}
     else{panel.hidden=true;panel.classList.remove('active');}
   });
+  const currentLabel = document.getElementById('tabs-current-label');
+  if(currentLabel && name !== 'portada') currentLabel.textContent = labels[name] || 'Secciones';
+  closeTabsDropdown();
 }
 tabButtons.forEach(btn=>btn.addEventListener('click',()=>activateTab(btn.dataset.tab)));
 activateTab(location.hash.replace('#','') || 'portada');
-document.querySelector('nav.tabs').addEventListener('keydown',(e)=>{
+document.querySelector('nav.tabs')?.addEventListener('keydown',(e)=>{
   if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft') return;
   const i=tabButtons.findIndex(b=>b.getAttribute('aria-selected')==='true');
   const next=e.key==='ArrowRight'?(i+1)%tabButtons.length:(i-1+tabButtons.length)%tabButtons.length;
@@ -1736,29 +1799,6 @@ document.addEventListener('DOMContentLoaded', initCompetition);
 
     input.addEventListener('input', function(){
       localStorage.setItem(key, input.value);
-    });
-  });
-
-  document.querySelectorAll('[data-tab="colorchallenge"]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.panel').forEach(function(panel){
-        panel.hidden = true;
-        panel.classList.remove('active');
-      });
-
-      document.querySelectorAll('[role="tab"]').forEach(function(tab){
-        tab.setAttribute('aria-selected', 'false');
-        tab.setAttribute('tabindex', '-1');
-      });
-
-      const panel = document.getElementById('panel-colorchallenge');
-      if(panel){
-        panel.hidden = false;
-        panel.classList.add('active');
-      }
-
-      btn.setAttribute('aria-selected', 'true');
-      btn.setAttribute('tabindex', '0');
     });
   });
 })();
