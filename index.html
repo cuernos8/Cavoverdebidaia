@@ -251,80 +251,66 @@ footer.site-footer .hand{font-family:var(--font-hand);font-size:1.3rem;color:var
 
 /* Competition */
 .competition-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:18px;
-  margin-bottom:20px;
-  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
 }
 
-.competition-card h3{margin-top:0;font-family:var(--font-display);}
-.competition-note{color:var(--ink-soft);font-size:.86rem;margin-top:-6px;}
-
-.competition-row{
-  display:grid;
-  grid-template-columns:1fr 220px;
-  gap:12px;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px dashed var(--line);
+.competition-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
 }
 
-.competition-row:last-child{border-bottom:none;}
-
-.competition-row strong{font-size:.95rem;}
-
-.competition-row select,
-.competition-row input,
-#competition-day,
-#mvp-select{
-  width:100%;
-  border:1.5px solid var(--line);
-  border-radius:12px;
-  padding:9px 11px;
-  background:#fff;
-  font-family:var(--font-body);
+.cabo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
 }
 
-.special-controls{
-  display:grid;
-  grid-template-columns:1fr 90px;
-  gap:8px;
+.cabo-grid span{
+    background:var(--teal-tint);
+    padding:10px;
+    border-radius:10px;
 }
 
-.scoreboard{
-  margin-top:18px;
-  padding-top:14px;
-  border-top:1px dashed var(--line);
+.daily-winner{
+    background:var(--gold-tint);
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
 }
 
-.score-item{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:8px 0;
-  border-bottom:1px solid rgba(32,48,61,.08);
-  font-weight:700;
+.ranking-player{
+    margin-bottom:18px;
 }
 
-.score-item span:last-child{
-  font-family:var(--font-mono);
-  color:var(--coral-deep);
+.ranking-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
 }
 
-@media(max-width:640px){
-  .competition-row,
-  .special-controls{
-    grid-template-columns:1fr;
-  }
-
-  .competition-card{
-    padding:15px;
-  }
+.progress{
+    height:16px;
+    background:#ddd;
+    border-radius:999px;
+    overflow:hidden;
 }
 
-/* Responsive fixes */
+.progress-bar{
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        var(--gold),
+        var(--coral)
+    );
+}
+
+/* Responsive + tabs */
 body{overflow-x:hidden;}
 .header-inner{align-items:center;}
 nav.tabs{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:thin;}
@@ -345,9 +331,6 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
   .timeline-item{gap:10px;}
   .day-badge{width:58px;height:58px;}
   .timeline::before{left:29px;}
-  .cv-widget{padding:0;margin:0 auto 1rem;}
-  .cv-header{align-items:flex-start;}
-  .cv-updated{margin-left:0;display:block;}
   .competition-grid,.cabo-grid{grid-template-columns:1fr;}
 }
 @media(max-width:420px){
@@ -357,9 +340,24 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
   .bp-main{padding:16px 14px;}
   .bp-route{font-size:.9rem;}
   .flip-unit{min-width:65px;padding:12px 8px 8px;}
-  .cv-forecast{grid-template-columns:repeat(2,1fr)!important;}
-  .cv-forecast .cv-day:nth-child(n+5){display:block!important;}
 }
+
+
+
+/* Competition enhanced */
+.competition-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start;margin-bottom:20px;}
+.competition-subgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start;}
+.competition-day-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+.competition-day-picker{font-size:.78rem;font-weight:800;color:var(--ink-soft);display:flex;flex-direction:column;gap:5px;min-width:220px;}
+.competition-card h4{font-family:var(--font-display);font-size:1.05rem;margin:8px 0 10px;}
+.competition-points{font-family:var(--font-mono);font-size:.72rem;color:var(--coral-deep);background:var(--coral-tint);border-radius:999px;padding:2px 7px;margin-left:4px;white-space:nowrap;}
+.scoreboard-list{margin-top:8px;}
+.score-item:first-child{font-size:1.03rem;background:var(--gold-tint);border-radius:12px;padding:10px 12px;margin-bottom:5px;border-bottom:0;}
+.score-item.is-negative span:last-child{color:var(--ink-soft);}
+.competition-reset{margin-top:12px;}
+.cabo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;}
+.cabo-grid span{background:rgba(32,48,61,.06);border:1px dashed var(--line);border-radius:12px;padding:9px 11px;font-size:.86rem;}
+@media(max-width:760px){.competition-grid,.competition-subgrid{grid-template-columns:1fr}.competition-day-picker{min-width:100%;}.competition-row{grid-template-columns:1fr;}}
 
 </style>
 </head>
@@ -515,329 +513,112 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
     </div>
   </section> 
 
-<!-- TIEMPO -->
+  <!-- TIEMPO -->
   <section class="panel" id="panel-tiempo" role="tabpanel" aria-labelledby="tab-btn-tiempo" hidden>
     <div class="section-head">
-      <h2>🌤️ Tiempo</h2>
-      <p>Consulta el tiempo de Ilha do Sal sin que aparezca en portada.</p>
+      <h2>🌤️ Tiempo por día y ubicación</h2>
+      <p>El tiempo sigue el itinerario: cada tarjeta usa la ciudad o isla donde estaréis ese día.</p>
     </div>
-<style>
-  .cv-widget {
-    font-family: system-ui, -apple-system, sans-serif;
-    max-width: 720px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    color: #1a2e3b;
-  }
-  .cv-widget * { box-sizing: border-box; }
-
-  .cv-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 1.25rem;
-  }
-  .cv-header-icon {
-    width: 36px; height: 36px;
-    background: #1a6b8a;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 18px;
-  }
-  .cv-header h2 {
-    margin: 0; font-size: 1.1rem; font-weight: 600; color: #1a2e3b;
-  }
-  .cv-header p {
-    margin: 0; font-size: 0.78rem; color: #5a7a8a;
-  }
-  .cv-updated {
-    margin-left: auto; font-size: 0.72rem; color: #5a7a8a;
-  }
-
-  /* Tarjeta actual */
-  .cv-current {
-    background: linear-gradient(135deg, #1a6b8a 0%, #0d4a63 100%);
-    border-radius: 16px;
-    padding: 1.5rem;
-    color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-    margin-bottom: 1rem;
-  }
-  .cv-temp-block { display: flex; flex-direction: column; }
-  .cv-temp-main {
-    font-size: 3.5rem; font-weight: 700; line-height: 1;
-    letter-spacing: -2px;
-  }
-  .cv-temp-feel { font-size: 0.8rem; opacity: 0.75; margin-top: 4px; }
-  .cv-condition { font-size: 1rem; font-weight: 500; margin-top: 6px; }
-  .cv-icon-big { font-size: 3rem; line-height: 1; }
-  .cv-humidity { font-size: 0.8rem; opacity: 0.75; margin-top: 4px; }
-
-  /* Tarjetas secundarias */
-  .cv-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-  }
-  .cv-card {
-    background: #fff;
-    border: 1px solid #e0eaef;
-    border-radius: 12px;
-    padding: 1rem;
-  }
-  .cv-card-label {
-    font-size: 0.72rem; text-transform: uppercase;
-    letter-spacing: 0.05em; color: #5a7a8a; margin-bottom: 6px;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .cv-card-value {
-    font-size: 1.4rem; font-weight: 700; color: #1a2e3b; line-height: 1;
-  }
-  .cv-card-sub {
-    font-size: 0.78rem; color: #5a7a8a; margin-top: 4px;
-  }
-  .cv-sea-badge {
-    display: inline-block; padding: 3px 8px;
-    border-radius: 20px; font-size: 0.75rem; font-weight: 600;
-    margin-top: 6px;
-  }
-  .cv-sea-calm { background: #d4f5e0; color: #1a6b3a; }
-  .cv-sea-moderate { background: #fff3cd; color: #7a5200; }
-  .cv-sea-rough { background: #fde8e8; color: #8b1a1a; }
-
-  /* Pronóstico 7 días */
-  .cv-forecast-title {
-    font-size: 0.78rem; text-transform: uppercase;
-    letter-spacing: 0.07em; color: #5a7a8a;
-    margin: 0 0 0.6rem;
-  }
-  .cv-forecast {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
-  }
-  .cv-day {
-    background: #fff;
-    border: 1px solid #e0eaef;
-    border-radius: 10px;
-    padding: 0.6rem 0.3rem;
-    text-align: center;
-  }
-  .cv-day-name { font-size: 0.7rem; color: #5a7a8a; font-weight: 600; }
-  .cv-day-icon { font-size: 1.4rem; margin: 4px 0; }
-  .cv-day-max { font-size: 0.85rem; font-weight: 700; color: #1a2e3b; }
-  .cv-day-min { font-size: 0.75rem; color: #7a9aaa; }
-  .cv-day-rain { font-size: 0.65rem; color: #4a8fbf; margin-top: 2px; }
-
-  .cv-loading {
-    text-align: center; padding: 2rem;
-    color: #5a7a8a; font-size: 0.9rem;
-  }
-  .cv-error {
-    background: #fde8e8; border: 1px solid #f5c0c0;
-    border-radius: 12px; padding: 1rem;
-    color: #8b1a1a; font-size: 0.85rem; text-align: center;
-  }
-
-  @media (max-width: 500px) {
-    .cv-current { grid-template-columns: 1fr; gap: 0.5rem; }
-    .cv-forecast { grid-template-columns: repeat(4, 1fr); }
-    .cv-forecast .cv-day:nth-child(n+5) { display: none; }
-    .cv-temp-main { font-size: 2.8rem; }
-  }
-</style>
-
-<div class="cv-widget" id="caboverde-weather">
-  <div class="cv-header">
-    <div class="cv-header-icon">🌊</div>
-    <div>
-      <h2>Tiempo en Cabo Verde</h2>
-      <p>Ilha do Sal · Datos en tiempo real</p>
+    <div class="weather-help">
+      Para cambiarlo después, edita solo el bloque <strong>WEATHER_DAYS</strong> del JavaScript: fecha, ubicación, coordenadas y nota. Si la fecha está disponible en Open-Meteo, cargará previsión real; si no, muestra una estimación editable.
     </div>
-    <span class="cv-updated" id="cv-updated-time"></span>
-  </div>
-  <div id="cv-content">
-    <div class="cv-loading">⏳ Cargando datos meteorológicos...</div>
-  </div>
-</div>
-
-<script>
-(function() {
-  // Coordenadas de Ilha do Sal, Cabo Verde
-  const LAT = 16.73, LON = -22.94;
-
-  const WEATHER_CODES = {
-    0:'Despejado', 1:'Mayormente despejado', 2:'Parcialmente nublado',
-    3:'Nublado', 45:'Niebla', 48:'Niebla helada',
-    51:'Llovizna ligera', 53:'Llovizna', 55:'Llovizna intensa',
-    61:'Lluvia ligera', 63:'Lluvia', 65:'Lluvia fuerte',
-    71:'Nieve ligera', 73:'Nieve', 75:'Nieve intensa',
-    80:'Chubascos ligeros', 81:'Chubascos', 82:'Chubascos fuertes',
-    95:'Tormenta', 96:'Tormenta con granizo', 99:'Tormenta intensa'
-  };
-
-  const WEATHER_ICONS = {
-    0:'☀️', 1:'🌤️', 2:'⛅', 3:'☁️', 45:'🌫️', 48:'🌫️',
-    51:'🌦️', 53:'🌦️', 55:'🌧️', 61:'🌦️', 63:'🌧️', 65:'🌧️',
-    71:'🌨️', 73:'🌨️', 75:'❄️', 80:'🌧️', 81:'🌧️', 82:'⛈️',
-    95:'⛈️', 96:'⛈️', 99:'⛈️'
-  };
-
-  const WIND_DIRS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
-
-  function windDir(deg) {
-    return WIND_DIRS[Math.round(deg / 22.5) % 16];
-  }
-
-  function beaufort(ms) {
-    const kmh = ms * 3.6;
-    if (kmh < 1)  return {b:0, desc:'Calma'};
-    if (kmh < 6)  return {b:1, desc:'Ventolina'};
-    if (kmh < 12) return {b:2, desc:'Brisa muy débil'};
-    if (kmh < 20) return {b:3, desc:'Brisa débil'};
-    if (kmh < 29) return {b:4, desc:'Brisa moderada'};
-    if (kmh < 39) return {b:5, desc:'Brisa fresca'};
-    if (kmh < 50) return {b:6, desc:'Brisa fuerte'};
-    if (kmh < 62) return {b:7, desc:'Viento fuerte'};
-    return {b:8, desc:'Temporal'};
-  }
-
-  function seaState(waveH) {
-    if (waveH < 0.5) return {cls:'cv-sea-calm', label:'Mar llana (' + waveH.toFixed(1) + 'm)'};
-    if (waveH < 1.25) return {cls:'cv-sea-calm', label:'Mar rizada (' + waveH.toFixed(1) + 'm)'};
-    if (waveH < 2.5) return {cls:'cv-sea-moderate', label:'Mar poco agitada (' + waveH.toFixed(1) + 'm)'};
-    if (waveH < 4.0) return {cls:'cv-sea-moderate', label:'Mar agitada (' + waveH.toFixed(1) + 'm)'};
-    return {cls:'cv-sea-rough', label:'Mar gruesa (' + waveH.toFixed(1) + 'm)'};
-  }
-
-  function dayName(dateStr, i) {
-    if (i === 0) return 'Hoy';
-    if (i === 1) return 'Mañana';
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('es-ES', {weekday:'short'}).replace('.','');
-  }
-
-  async function loadWeather() {
-    const url = 'https://api.open-meteo.com/v1/forecast?' + [
-      'latitude=' + LAT, 'longitude=' + LON,
-      'current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m,wind_gusts_10m',
-      'daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max',
-      'wind_speed_unit=ms',
-      'forecast_days=7',
-      'timezone=Atlantic%2FCape_Verde'
-    ].join('&');
-
-    const marineUrl = 'https://marine-api.open-meteo.com/v1/marine?' + [
-      'latitude=' + LAT, 'longitude=' + LON,
-      'current=wave_height,wave_direction,wave_period',
-      'timezone=Atlantic%2FCape_Verde'
-    ].join('&');
-
-    const [wRes, mRes] = await Promise.all([fetch(url), fetch(marineUrl)]);
-    const [w, m] = await Promise.all([wRes.json(), mRes.json()]);
-    return {w, m};
-  }
-
-  function render(w, m) {
-    const c = w.current;
-    const d = w.daily;
-    const mc = m.current || {};
-
-    const code = c.weather_code;
-    const icon = WEATHER_ICONS[code] || '🌡️';
-    const desc = WEATHER_CODES[code] || 'Variable';
-    const wf = beaufort(c.wind_speed_10m);
-    const waveH = mc.wave_height != null ? mc.wave_height : null;
-    const sea = waveH !== null ? seaState(waveH) : null;
-
-    const now = new Date();
-    document.getElementById('cv-updated-time').textContent =
-      'Act. ' + now.toLocaleTimeString('es-ES', {hour:'2-digit', minute:'2-digit'});
-
-    // Pronóstico
-    let forecastHTML = '';
-    for (let i = 0; i < 7; i++) {
-      const fi = WEATHER_ICONS[d.weather_code[i]] || '🌡️';
-      const rain = d.precipitation_probability_max[i];
-      forecastHTML += `
-        <div class="cv-day">
-          <div class="cv-day-name">${dayName(d.time[i], i)}</div>
-          <div class="cv-day-icon">${fi}</div>
-          <div class="cv-day-max">${Math.round(d.temperature_2m_max[i])}°</div>
-          <div class="cv-day-min">${Math.round(d.temperature_2m_min[i])}°</div>
-          ${rain > 10 ? `<div class="cv-day-rain">💧${rain}%</div>` : ''}
-        </div>`;
-    }
-
-    const seaCardHTML = sea ? `
-      <div class="cv-card">
-        <div class="cv-card-label">🌊 Estado del mar</div>
-        <div class="cv-card-value">${waveH.toFixed(1)} m</div>
-        <div><span class="cv-sea-badge ${sea.cls}">${sea.label}</span></div>
-        ${mc.wave_period ? `<div class="cv-card-sub">Período ${mc.wave_period.toFixed(0)}s · ${mc.wave_direction != null ? windDir(mc.wave_direction) : ''}</div>` : ''}
-      </div>` : `
-      <div class="cv-card">
-        <div class="cv-card-label">🌊 Estado del mar</div>
-        <div class="cv-card-value" style="font-size:0.95rem">No disponible</div>
-        <div class="cv-card-sub">Datos marinos no cargados</div>
-      </div>`;
-
-    document.getElementById('cv-content').innerHTML = `
-      <div class="cv-current">
-        <div class="cv-temp-block">
-          <div class="cv-temp-main">${Math.round(c.temperature_2m)}°C</div>
-          <div class="cv-condition">${desc}</div>
-          <div class="cv-temp-feel">Sensación ${Math.round(c.apparent_temperature)}°C</div>
-          <div class="cv-humidity">💧 Humedad ${c.relative_humidity_2m}%</div>
-        </div>
-        <div style="text-align:right">
-          <div class="cv-icon-big">${icon}</div>
-          <div style="font-size:0.8rem; opacity:0.8; margin-top:8px">
-            Ilha do Sal<br>Cabo Verde
-          </div>
-        </div>
-      </div>
-
-      <div class="cv-cards">
-        <div class="cv-card">
-          <div class="cv-card-label">💨 Viento</div>
-          <div class="cv-card-value">${Math.round(c.wind_speed_10m * 3.6)} km/h</div>
-          <div class="cv-card-sub">Dirección ${windDir(c.wind_direction_10m)} · Beaufort ${wf.b}</div>
-          <div class="cv-card-sub">${wf.desc}</div>
-          ${c.wind_gusts_10m ? `<div class="cv-card-sub">Ráfagas ${Math.round(c.wind_gusts_10m * 3.6)} km/h</div>` : ''}
-        </div>
-        ${seaCardHTML}
-        <div class="cv-card">
-          <div class="cv-card-label">🌡️ Temperatura</div>
-          <div class="cv-card-value">${Math.round(c.temperature_2m)}°C</div>
-          <div class="cv-card-sub">Máx hoy ${Math.round(d.temperature_2m_max[0])}° / Mín ${Math.round(d.temperature_2m_min[0])}°</div>
-          <div class="cv-card-sub">Sensación ${Math.round(c.apparent_temperature)}°C</div>
-        </div>
-      </div>
-
-      <p class="cv-forecast-title">Pronóstico 7 días</p>
-      <div class="cv-forecast">${forecastHTML}</div>
-    `;
-  }
-
-  loadWeather()
-    .then(({w, m}) => render(w, m))
-    .catch(err => {
-      document.getElementById('cv-content').innerHTML =
-        `<div class="cv-error">⚠️ No se pudieron cargar los datos del tiempo.<br>
-        Comprueba tu conexión a internet.<br><small>${err.message}</small></div>`;
-    });
-})();
-</script>
-
+    <div class="weather-toolbar" id="weather-filters" role="group" aria-label="Filtrar tiempo por zona">
+      <button class="weather-filter" data-country="todos" aria-pressed="true">Todos</button>
+      <button class="weather-filter" data-country="euskal" aria-pressed="false">Euskal Herria</button>
+      <button class="weather-filter" data-country="espana" aria-pressed="false">España</button>
+      <button class="weather-filter" data-country="portugal" aria-pressed="false">Portugal</button>
+      <button class="weather-filter" data-country="caboverde" aria-pressed="false">Cabo Verde</button>
+    </div>
+    <div id="weather-message"></div>
+    <div class="weather-grid" id="weather-grid">
+      <div class="weather-card"><strong>⏳ Cargando tiempo del viaje...</strong></div>
+    </div>
   </section>
 
-<section class="panel" id="panel-competicion" role="tabpanel" aria-labelledby="tab-btn-competicion">
-...
-</section>
+<style>
+.weather-help{background:var(--gold-tint);border:1px solid rgba(201,125,20,.35);color:#5b3a0b;border-radius:14px;padding:12px 14px;margin:14px 0 18px;font-size:.88rem;}
+.weather-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;}
+.weather-filter{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--ink-soft);}
+.weather-filter[aria-pressed="true"]{background:var(--teal-tint);border-color:var(--teal);color:var(--teal-deep);}
+.weather-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+.weather-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -10px rgba(32,48,61,.25);position:relative;overflow:hidden;}
+.weather-card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--teal);opacity:.85;}
+.weather-card[data-country="euskal"]::before{background:var(--euskal);}
+.weather-card[data-country="espana"]::before{background:var(--gold);}
+.weather-card[data-country="portugal"]::before{background:var(--coral);}
+.weather-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px;}
+.weather-date{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);text-transform:uppercase;}
+.weather-place{font-family:var(--font-display);font-size:1.15rem;font-weight:800;margin:2px 0 0;}
+.weather-route{font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
+.weather-icon{font-size:2rem;line-height:1;}
+.weather-main{display:flex;align-items:flex-end;gap:8px;margin:10px 0;}
+.weather-temp{font-family:var(--font-display);font-size:2rem;font-weight:800;}
+.weather-range{color:var(--ink-soft);font-size:.82rem;margin-bottom:6px;}
+.weather-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:12px;}
+.weather-meta span{background:rgba(32,48,61,.06);border-radius:10px;padding:7px 8px;font-size:.78rem;}
+.weather-note{font-style:italic;border-left:2px solid var(--line);padding-left:10px;color:var(--ink-soft);font-size:.82rem;margin:12px 0 0;}
+.weather-status{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 9px;font-size:.68rem;font-weight:800;background:var(--teal-tint);color:var(--teal-deep);}
+.weather-status.manual{background:var(--gold-tint);color:var(--gold-deep);}
+.weather-error{background:var(--coral-tint);color:var(--coral-deep);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:.85rem;}
+@media(max-width:520px){.weather-grid{grid-template-columns:1fr}.weather-meta{grid-template-columns:1fr}.weather-top{align-items:center}.weather-temp{font-size:1.7rem}}
+</style>
+
+  <!-- COMPETICIÓN -->
+  <section class="panel" id="panel-competicion" role="tabpanel" aria-labelledby="tab-btn-competicion" hidden>
+    <div class="section-head">
+      <h2>🏆 Competición del viaje</h2>
+      <p>Selecciona el día, asigna retos y deja que el ranking se actualice solo. Todo se guarda en este navegador.</p>
+    </div>
+
+    <div class="competition-grid">
+      <div class="competition-card">
+        <h3>👭 Participantes</h3>
+        <p class="competition-note">Puedes cambiar nombres y emojis en el bloque <strong>COMPETITION_PLAYERS</strong> del JavaScript.</p>
+        <div class="crew-chips" id="competition-players"></div>
+      </div>
+
+      <div class="competition-card">
+        <h3>📊 Ranking general</h3>
+        <div id="scoreboard-list" class="scoreboard-list"></div>
+        <button type="button" class="reset-btn competition-reset" id="competition-reset">Reiniciar competición</button>
+      </div>
+    </div>
+
+    <div class="competition-card">
+      <div class="competition-day-head">
+        <div>
+          <h3>📅 Registro diario</h3>
+          <p class="competition-note">Cada reto diario suma sus puntos. El MVP suma aparte.</p>
+        </div>
+        <label class="competition-day-picker">
+          Día del viaje
+          <select id="competition-day"></select>
+        </label>
+      </div>
+
+      <div class="competition-subgrid">
+        <div>
+          <h4>🎯 Retos diarios</h4>
+          <div id="daily-challenges"></div>
+        </div>
+        <div>
+          <h4>😂 Puntos especiales</h4>
+          <div id="special-points"></div>
+        </div>
+      </div>
+
+      <div class="competition-row competition-mvp">
+        <strong>🏆 MVP del día <span class="competition-points">+5</span></strong>
+        <select id="mvp-select"></select>
+      </div>
+    </div>
+
+    <div class="competition-card">
+      <h3>🌴 Retos exclusivos Cabo Verde</h3>
+      <p class="competition-note">También se registran desde el bloque de puntos especiales.</p>
+      <div class="cabo-grid" id="cabo-challenges"></div>
+    </div>
+  </section>
   
 </main>
 
@@ -1115,6 +896,29 @@ const ITINERARY = [
   }
 ];
 
+
+/* ============================================================
+   WEATHER BY ITINERARY - EDITABLE
+   Cambia aquí fechas, lugares o coordenadas.
+   source: "auto" intenta previsión real; fallback muestra los valores manuales.
+   ============================================================ */
+const WEATHER_DAYS = [
+  {day:1, date:'2026-08-05', label:'Mié 5 Ago', country:'euskal', place:'Euskal Herria / ruta', route:'Euskal Herria → Salamanca → Donas', lat:43.26, lon:-2.93, timezone:'Europe/Madrid', manual:{icon:'☀️', desc:'Salida calurosa, revisar Salamanca a mediodía', max:32, min:18, rain:10, wind:'Flojo', sea:null}},
+  {day:2, date:'2026-08-06', label:'Jue 6 Ago', country:'caboverde', place:'Mindelo · São Vicente', route:'Donas → Lisboa → São Vicente', lat:16.89, lon:-24.99, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'🌤️', desc:'Tropical seco y ventoso', max:29, min:24, rain:8, wind:'Alisio moderado', sea:'Atlántico moderado'}},
+  {day:3, date:'2026-08-07', label:'Vie 7 Ago', country:'caboverde', place:'São Vicente', route:'Tour São Vicente', lat:16.86, lon:-24.97, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'🌤️', desc:'Sol con nubes altas', max:29, min:24, rain:8, wind:'Alisio moderado', sea:'Costa con viento'}},
+  {day:4, date:'2026-08-08', label:'Sáb 8 Ago', country:'caboverde', place:'Santo Antão / Porto Novo', route:'São Vicente → Santo Antão', lat:17.02, lon:-25.06, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'⛅', desc:'Montaña con posibles nubes', max:28, min:23, rain:15, wind:'Brisa', sea:'Revisar ferry'}},
+  {day:5, date:'2026-08-09', label:'Dom 9 Ago', country:'caboverde', place:'Santo Antão / Ribeira Grande', route:'Tour Santo Antão', lat:17.18, lon:-25.07, timezone:'Atlantic/Cape_Verde', manual:{icon:'⛅', desc:'Valles más húmedos, llevar capa ligera', max:27, min:22, rain:22, wind:'Brisa', sea:null}},
+  {day:6, date:'2026-08-10', label:'Lun 10 Ago', country:'caboverde', place:'Santa María · Sal', route:'Santo Antão → São Vicente → Sal', lat:16.60, lon:-22.91, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'☀️', desc:'Seco, playa y viento', max:29, min:24, rain:5, wind:'Alisio moderado', sea:'Oleaje suave-moderado'}},
+  {day:7, date:'2026-08-11', label:'Mar 11 Ago', country:'caboverde', place:'Isla de Sal', route:'Tour por Sal', lat:16.73, lon:-22.94, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'☀️', desc:'Mucho sol, protección alta', max:30, min:24, rain:5, wind:'Alisio moderado', sea:'Costa norte con viento'}},
+  {day:8, date:'2026-08-12', label:'Mié 12 Ago', country:'caboverde', place:'Santa María · Sal', route:'Snorkel + relax', lat:16.60, lon:-22.91, timezone:'Atlantic/Cape_Verde', marine:true, manual:{icon:'☀️', desc:'Ideal para playa, confirmar mar para snorkel', max:30, min:24, rain:5, wind:'Moderado', sea:'Comprobar oleaje'}},
+  {day:9, date:'2026-08-13', label:'Jue 13 Ago', country:'portugal', place:'Lisboa', route:'Sal → Lisboa', lat:38.72, lon:-9.14, timezone:'Europe/Lisbon', manual:{icon:'☀️', desc:'Tarde urbana cálida', max:29, min:19, rain:8, wind:'Brisa atlántica', sea:null}},
+  {day:10, date:'2026-08-14', label:'Vie 14 Ago', country:'portugal', place:'Lisboa', route:'Lisboa completo', lat:38.72, lon:-9.14, timezone:'Europe/Lisbon', manual:{icon:'☀️', desc:'Calor en cuestas; agua y descansos', max:30, min:20, rain:8, wind:'Brisa', sea:null}},
+  {day:11, date:'2026-08-15', label:'Sáb 15 Ago', country:'portugal', place:'Sintra / Cabo da Roca / Cascais', route:'Excursión costa', lat:38.80, lon:-9.38, timezone:'Europe/Lisbon', marine:true, manual:{icon:'🌤️', desc:'Sintra más fresca; Cabo da Roca ventoso', max:26, min:18, rain:12, wind:'Fuerte en costa', sea:'Cascais variable'}},
+  {day:12, date:'2026-08-16', label:'Dom 16 Ago', country:'portugal', place:'Coímbra', route:'Lisboa → Coímbra', lat:40.20, lon:-8.41, timezone:'Europe/Lisbon', manual:{icon:'☀️', desc:'Interior más caluroso', max:31, min:18, rain:10, wind:'Flojo', sea:null}},
+  {day:13, date:'2026-08-17', label:'Lun 17 Ago', country:'espana', place:'Salamanca', route:'Coímbra → Salamanca', lat:40.97, lon:-5.66, timezone:'Europe/Madrid', manual:{icon:'☀️', desc:'Calor seco; evitar 14:00–17:00', max:33, min:17, rain:8, wind:'Flojo', sea:null}},
+  {day:14, date:'2026-08-18', label:'Mar 18 Ago', country:'euskal', place:'Burgos / Euskal Herria', route:'Salamanca → Burgos → Euskal Herria', lat:42.34, lon:-3.70, timezone:'Europe/Madrid', manual:{icon:'🌤️', desc:'Ruta de vuelta; revisar tormentas de tarde', max:28, min:15, rain:15, wind:'Flojo', sea:null}}
+];
+
 const BUDGET = [
   {concept:'Vuelos ida (Lisboa → São Vicente)', total:'942,45€', pp:'188,49€'},
   {concept:'Vuelos vuelta (Sal → Lisboa)', total:'1.239,95€', pp:'247,99€'},
@@ -1216,178 +1020,7 @@ const CHECKLIST = [
     {id:'candado', label:'Candado pequeño para la mochila (opcional)'}
   ]}
 ];
-<script>
-const travelPeople = ["Persona 1", "Persona 2", "Persona 3", "Persona 4"]; 
-const travelDays = 10;
 
-const dailyChallengesData = [
-  "🏊 Primera en bañarse",
-  "📸 Mejor foto del día",
-  "🧠 Encontrar un dato curioso",
-  "🍴 Probar comida local nueva",
-  "😂 Hacer reír al grupo",
-  "✅ Completar todos los planes del día"
-];
-
-const specialPointsData = [
-  ["🤸 Caída épica sin daños", 1],
-  ["🎤 Frase legendaria", 2],
-  ["😴 Dormirse en el coche", 1],
-  ["🧭 Confundirse de dirección", -2],
-  ["🎒 Olvidar algo importante", -3],
-  ["🚶 Perderse", -2],
-  ["⏰ Llegar tarde", -1]
-];
-
-const STORAGE_KEY = "caboVerdeCompetition";
-
-let competitionData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-
-function saveCompetition(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(competitionData));
-}
-
-function optionsHTML(selected = ""){
-  return `<option value="">Sin asignar</option>` + travelPeople.map(name =>
-    `<option value="${name}" ${selected === name ? "selected" : ""}>${name}</option>`
-  ).join("");
-}
-
-function getCurrentDay(){
-  return document.getElementById("competition-day").value;
-}
-
-function ensureDay(day){
-  if(!competitionData[day]){
-    competitionData[day] = {
-      daily:{},
-      mvp:"",
-      special:{}
-    };
-  }
-}
-
-function renderCompetition(){
-  const daySelect = document.getElementById("competition-day");
-  const dailyWrap = document.getElementById("daily-challenges");
-  const specialWrap = document.getElementById("special-points");
-  const mvpSelect = document.getElementById("mvp-select");
-
-  if(!daySelect || !dailyWrap || !specialWrap || !mvpSelect) return;
-
-  daySelect.innerHTML = Array.from({length:travelDays}, (_,i) =>
-    `<option value="day-${i+1}">Día ${i+1}</option>`
-  ).join("");
-
-  daySelect.addEventListener("change", renderDay);
-  renderDay();
-}
-
-function renderDay(){
-  const day = getCurrentDay();
-  ensureDay(day);
-
-  const dailyWrap = document.getElementById("daily-challenges");
-  const specialWrap = document.getElementById("special-points");
-  const mvpSelect = document.getElementById("mvp-select");
-
-  dailyWrap.innerHTML = dailyChallengesData.map(challenge => {
-    const selected = competitionData[day].daily[challenge] || "";
-    return `
-      <div class="competition-row">
-        <strong>${challenge}</strong>
-        <select data-type="daily" data-key="${challenge}">
-          ${optionsHTML(selected)}
-        </select>
-      </div>
-    `;
-  }).join("");
-
-  mvpSelect.innerHTML = optionsHTML(competitionData[day].mvp || "");
-
-  specialWrap.innerHTML = specialPointsData.map(([label, points]) => {
-    const item = competitionData[day].special[label] || {person:"", points};
-    return `
-      <div class="competition-row">
-        <strong>${label} (${points > 0 ? "+" : ""}${points})</strong>
-        <div class="special-controls">
-          <select data-type="special-person" data-key="${label}">
-            ${optionsHTML(item.person)}
-          </select>
-          <input type="number" data-type="special-points" data-key="${label}" value="${item.points}">
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  document.querySelectorAll("[data-type='daily']").forEach(select => {
-    select.addEventListener("change", e => {
-      competitionData[day].daily[e.target.dataset.key] = e.target.value;
-      saveCompetition();
-      updateScoreboard();
-    });
-  });
-
-  mvpSelect.addEventListener("change", e => {
-    competitionData[day].mvp = e.target.value;
-    saveCompetition();
-    updateScoreboard();
-  });
-
-  document.querySelectorAll("[data-type='special-person'], [data-type='special-points']").forEach(input => {
-    input.addEventListener("change", e => {
-      const key = e.target.dataset.key;
-      if(!competitionData[day].special[key]){
-        const base = specialPointsData.find(item => item[0] === key);
-        competitionData[day].special[key] = {person:"", points:base ? base[1] : 0};
-      }
-
-      if(e.target.dataset.type === "special-person"){
-        competitionData[day].special[key].person = e.target.value;
-      } else {
-        competitionData[day].special[key].points = Number(e.target.value);
-      }
-
-      saveCompetition();
-      updateScoreboard();
-    });
-  });
-
-  updateScoreboard();
-}
-
-function updateScoreboard(){
-  const scores = {};
-  travelPeople.forEach(name => scores[name] = 0);
-
-  Object.values(competitionData).forEach(day => {
-    Object.values(day.daily || {}).forEach(person => {
-      if(person) scores[person] += 1;
-    });
-
-    if(day.mvp){
-      scores[day.mvp] += 3;
-    }
-
-    Object.values(day.special || {}).forEach(item => {
-      if(item.person){
-        scores[item.person] += Number(item.points || 0);
-      }
-    });
-  });
-
-  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
-
-  document.getElementById("scoreboard-list").innerHTML = sorted.map(([name, points], index) => `
-    <div class="score-item">
-      <span>${index === 0 ? "👑 " : ""}${name}</span>
-      <span>${points} pts</span>
-    </div>
-  `).join("");
-}
-
-document.addEventListener("DOMContentLoaded", renderCompetition);
-</script>
 /* ============================================================
    TABS
    ============================================================ */
@@ -1421,6 +1054,95 @@ document.querySelector('nav.tabs').addEventListener('keydown',(e)=>{
   const next=e.key==='ArrowRight'?(i+1)%tabButtons.length:(i-1+tabButtons.length)%tabButtons.length;
   tabButtons[next].focus();
   activateTab(tabButtons[next].dataset.tab);
+});
+
+
+/* ============================================================
+   WEATHER RENDER
+   ============================================================ */
+const WEATHER_CODES = {0:'Despejado',1:'Mayormente despejado',2:'Parcialmente nublado',3:'Nublado',45:'Niebla',48:'Niebla',51:'Llovizna ligera',53:'Llovizna',55:'Llovizna intensa',61:'Lluvia ligera',63:'Lluvia',65:'Lluvia fuerte',80:'Chubascos ligeros',81:'Chubascos',82:'Chubascos fuertes',95:'Tormenta'};
+const WEATHER_ICONS = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌦️',63:'🌧️',65:'🌧️',80:'🌧️',81:'🌧️',82:'⛈️',95:'⛈️'};
+const WIND_DIRS = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSO','SO','OSO','O','ONO','NO','NNO'];
+function weatherWindDir(deg){return deg==null?'—':WIND_DIRS[Math.round(deg/22.5)%16];}
+function isDateFetchable(dateStr){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(dateStr + 'T00:00:00');
+  const diffDays = Math.round((target - today)/86400000);
+  return diffDays >= 0 && diffDays <= 15;
+}
+async function fetchWeatherDay(day){
+  if(!isDateFetchable(day.date)) return null;
+  const url = 'https://api.open-meteo.com/v1/forecast?' + [
+    'latitude=' + day.lat, 'longitude=' + day.lon,
+    'daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant',
+    'wind_speed_unit=kmh',
+    'start_date=' + day.date, 'end_date=' + day.date,
+    'timezone=' + encodeURIComponent(day.timezone || 'auto')
+  ].join('&');
+  const res = await fetch(url);
+  if(!res.ok) throw new Error('Open-Meteo ' + res.status);
+  const data = await res.json();
+  const d = data.daily;
+  if(!d || !d.time || !d.time.length) return null;
+  return {
+    icon: WEATHER_ICONS[d.weather_code[0]] || '🌡️',
+    desc: WEATHER_CODES[d.weather_code[0]] || 'Variable',
+    max: Math.round(d.temperature_2m_max[0]),
+    min: Math.round(d.temperature_2m_min[0]),
+    rain: d.precipitation_probability_max[0],
+    wind: Math.round(d.wind_speed_10m_max[0]) + ' km/h ' + weatherWindDir(d.wind_direction_10m_dominant[0])
+  };
+}
+function renderWeatherCard(day, data, automatic){
+  const w = data || day.manual;
+  const status = automatic ? '<span class="weather-status">● previsión real</span>' : '<span class="weather-status manual">✎ editable</span>';
+  return `<article class="weather-card" data-country="${day.country}">
+    <div class="weather-top">
+      <div>
+        <div class="weather-date">Día ${day.day} · ${day.label}</div>
+        <div class="weather-place">${day.place}</div>
+        <div class="weather-route">${day.route}</div>
+      </div>
+      <div class="weather-icon">${w.icon}</div>
+    </div>
+    <div>${status}</div>
+    <div class="weather-main"><div class="weather-temp">${w.max}°</div><div class="weather-range">máx · ${w.min}° mín</div></div>
+    <strong>${w.desc}</strong>
+    <div class="weather-meta">
+      <span>💧 Lluvia ${w.rain ?? '—'}%</span>
+      <span>💨 Viento ${w.wind || '—'}</span>
+      <span>📍 ${day.lat.toFixed(2)}, ${day.lon.toFixed(2)}</span>
+      <span>🕒 ${day.timezone}</span>
+    </div>
+    ${w.sea ? `<p class="weather-note">🌊 ${w.sea}</p>` : ''}
+  </article>`;
+}
+async function renderTripWeather(){
+  const grid = document.getElementById('weather-grid');
+  const msg = document.getElementById('weather-message');
+  if(!grid) return;
+  const parts = []; let automaticCount = 0;
+  for(const day of WEATHER_DAYS){
+    try{
+      const live = await fetchWeatherDay(day);
+      if(live){ automaticCount++; parts.push(renderWeatherCard(day, live, true)); }
+      else parts.push(renderWeatherCard(day, null, false));
+    }catch(err){
+      parts.push(renderWeatherCard(day, null, false));
+    }
+  }
+  grid.innerHTML = parts.join('');
+  msg.innerHTML = automaticCount ? '' : '<div class="weather-error">ℹ️ Las fechas del viaje todavía no están dentro del rango de previsión real. Se están mostrando valores manuales editables por ubicación.</div>';
+}
+renderTripWeather();
+document.querySelectorAll('.weather-filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.weather-filter').forEach(b=>b.setAttribute('aria-pressed', b===btn ? 'true':'false'));
+    const country = btn.dataset.country;
+    document.querySelectorAll('.weather-card').forEach(card=>{
+      card.hidden = country !== 'todos' && card.dataset.country !== country;
+    });
+  });
 });
 
 /* ============================================================
@@ -1587,44 +1309,151 @@ function updateProgress(){
   });
 })();
 </script>
-  <script>
-const travelPeople = [
-  name:"🦋 Ilargi",
-  name:"🌺 Oihane", 
-  name:"✨ Andrea"
-  name:"🌟 Ira", 
-  name:"🌸 Ire"
+
+
+<script>
+/* ============================================================
+   COMPETITION - EDITABLE
+   Cambia nombres, retos y puntos desde estos tres bloques.
+   ============================================================ */
+const COMPETITION_PLAYERS = [
+  '✨ Andrea',
+  '🌟 Ira',
+  '🌺 Oihane',
+  '🌸 Ire',
+  '🦋 Ilargi'
 ];
 
-const ranking = document.getElementById("ranking-container");
+const COMPETITION_DAILY = [
+  {label:'🏊 Primera en bañarse', points:5},
+  {label:'📸 Mejor foto del día', points:3},
+  {label:'🧠 Encontrar un dato curioso', points:3},
+  {label:'🍴 Probar comida local nueva', points:2},
+  {label:'😂 Hacer reír al grupo', points:2},
+  {label:'✅ Completar todos los planes del día', points:2}
+];
 
-if(ranking){
+const COMPETITION_SPECIAL = [
+  {label:'🤸 Caída épica sin daños', points:1},
+  {label:'🎤 Frase legendaria', points:2},
+  {label:'😴 Dormirse en el coche', points:1},
+  {label:'🧭 Confundirse de dirección', points:-2},
+  {label:'🎒 Olvidar algo importante', points:-3},
+  {label:'🚶 Perderse', points:-2},
+  {label:'⏰ Llegar tarde', points:-1},
+  {label:'🐢 Ver tortugas', points:5},
+  {label:'🍲 Probar cachupa', points:3},
+  {label:'💃 Bailar música caboverdiana', points:4},
+  {label:'🗣️ Aprender una palabra local', points:2},
+  {label:'🐐 Foto con una cabra', points:2},
+  {label:'🌅 Ver amanecer', points:3},
+  {label:'🌇 Ver atardecer', points:3}
+];
 
-  const maxPoints = Math.max(...players.map(p => p.points));
+const COMPETITION_STORAGE_KEY = 'caboVerdeCompetitionV2';
+let competitionState = {};
+try{ competitionState = JSON.parse(localStorage.getItem(COMPETITION_STORAGE_KEY)) || {}; }catch(e){ competitionState = {}; }
 
-  players.forEach(player => {
-
-    ranking.innerHTML += `
-      <div class="ranking-player">
-
-        <div class="ranking-header">
-          <span>${player.name}</span>
-          <strong>${player.points} pts</strong>
-        </div>
-
-        <div class="progress">
-          <div
-            class="progress-bar"
-            style="width:${(player.points/maxPoints)*100}%">
-          </div>
-        </div>
-
-      </div>
-    `;
-  });
-
+function saveCompetition(){ localStorage.setItem(COMPETITION_STORAGE_KEY, JSON.stringify(competitionState)); }
+function playerOptions(selected=''){
+  return '<option value="">Sin asignar</option>' + COMPETITION_PLAYERS.map(name => `<option value="${name}" ${selected===name?'selected':''}>${name}</option>`).join('');
 }
-
+function dayKey(){ return document.getElementById('competition-day')?.value || 'day-1'; }
+function ensureCompetitionDay(key){
+  if(!competitionState[key]) competitionState[key] = {daily:{}, special:{}, mvp:''};
+  return competitionState[key];
+}
+function competitionDayOptions(){
+  const days = Array.isArray(ITINERARY) ? ITINERARY : [];
+  return days.map(d => `<option value="day-${d.day}">Día ${d.day} · ${d.date} · ${d.route}</option>`).join('');
+}
+function renderCompetitionPlayers(){
+  const wrap = document.getElementById('competition-players');
+  if(wrap) wrap.innerHTML = COMPETITION_PLAYERS.map(p => `<span>${p}</span>`).join('');
+  const cabo = document.getElementById('cabo-challenges');
+  if(cabo) cabo.innerHTML = COMPETITION_SPECIAL.slice(7).map(c => `<span>${c.label} (${c.points>0?'+':''}${c.points})</span>`).join('');
+}
+function renderCompetitionDay(){
+  const state = ensureCompetitionDay(dayKey());
+  const dailyWrap = document.getElementById('daily-challenges');
+  const specialWrap = document.getElementById('special-points');
+  const mvpSelect = document.getElementById('mvp-select');
+  if(!dailyWrap || !specialWrap || !mvpSelect) return;
+  dailyWrap.innerHTML = COMPETITION_DAILY.map(item => `
+    <div class="competition-row">
+      <strong>${item.label} <span class="competition-points">+${item.points}</span></strong>
+      <select data-comp="daily" data-key="${item.label}">${playerOptions(state.daily[item.label] || '')}</select>
+    </div>`).join('');
+  specialWrap.innerHTML = COMPETITION_SPECIAL.map(item => {
+    const saved = state.special[item.label] || {person:'', points:item.points};
+    return `<div class="competition-row">
+      <strong>${item.label} <span class="competition-points">${item.points>0?'+':''}${item.points}</span></strong>
+      <div class="special-controls">
+        <select data-comp="special-person" data-key="${item.label}">${playerOptions(saved.person || '')}</select>
+        <input type="number" data-comp="special-points" data-key="${item.label}" value="${Number(saved.points ?? item.points)}" aria-label="Puntos de ${item.label}">
+      </div>
+    </div>`;
+  }).join('');
+  mvpSelect.innerHTML = playerOptions(state.mvp || '');
+  document.querySelectorAll('[data-comp]').forEach(el => el.addEventListener('change', handleCompetitionChange));
+  updateCompetitionScoreboard();
+}
+function handleCompetitionChange(e){
+  const state = ensureCompetitionDay(dayKey());
+  const key = e.target.dataset.key;
+  const type = e.target.dataset.comp;
+  if(type === 'daily') state.daily[key] = e.target.value;
+  if(type === 'special-person'){
+    const base = COMPETITION_SPECIAL.find(i => i.label === key);
+    state.special[key] = state.special[key] || {person:'', points:base ? base.points : 0};
+    state.special[key].person = e.target.value;
+  }
+  if(type === 'special-points'){
+    const base = COMPETITION_SPECIAL.find(i => i.label === key);
+    state.special[key] = state.special[key] || {person:'', points:base ? base.points : 0};
+    state.special[key].points = Number(e.target.value || 0);
+  }
+  saveCompetition();
+  updateCompetitionScoreboard();
+}
+function updateCompetitionScoreboard(){
+  const scores = Object.fromEntries(COMPETITION_PLAYERS.map(p => [p,0]));
+  Object.values(competitionState).forEach(day => {
+    Object.entries(day.daily || {}).forEach(([label, person]) => {
+      const item = COMPETITION_DAILY.find(i => i.label === label);
+      if(person && item) scores[person] = (scores[person] || 0) + item.points;
+    });
+    if(day.mvp) scores[day.mvp] = (scores[day.mvp] || 0) + 5;
+    Object.values(day.special || {}).forEach(item => {
+      if(item.person) scores[item.person] = (scores[item.person] || 0) + Number(item.points || 0);
+    });
+  });
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const wrap = document.getElementById('scoreboard-list');
+  if(!wrap) return;
+  wrap.innerHTML = sorted.map(([name, points], i) => `<div class="score-item ${points<0?'is-negative':''}"><span>${i===0?'👑 ':''}${name}</span><span>${points} pts</span></div>`).join('');
+}
+function initCompetition(){
+  renderCompetitionPlayers();
+  const daySelect = document.getElementById('competition-day');
+  if(!daySelect) return;
+  daySelect.innerHTML = competitionDayOptions();
+  daySelect.addEventListener('change', renderCompetitionDay);
+  document.getElementById('mvp-select')?.addEventListener('change', e => {
+    ensureCompetitionDay(dayKey()).mvp = e.target.value;
+    saveCompetition();
+    updateCompetitionScoreboard();
+  });
+  document.getElementById('competition-reset')?.addEventListener('click', () => {
+    if(!confirm('¿Reiniciar toda la competición? Se borrarán los puntos guardados.')) return;
+    competitionState = {};
+    saveCompetition();
+    renderCompetitionDay();
+  });
+  renderCompetitionDay();
+}
+document.addEventListener('DOMContentLoaded', initCompetition);
 </script>
+
 </body>
 </html>
