@@ -358,7 +358,174 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
 .cabo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;}
 .cabo-grid span{background:rgba(32,48,61,.06);border:1px dashed var(--line);border-radius:12px;padding:9px 11px;font-size:.86rem;}
 @media(max-width:760px){.competition-grid,.competition-subgrid{grid-template-columns:1fr}.competition-day-picker{min-width:100%;}.competition-row{grid-template-columns:1fr;}}
+/* Color Challenge */
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin:22px 0;
+}
 
+.color-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.color-card span{
+  font-family:var(--font-hand);
+  font-size:1.35rem;
+  font-weight:700;
+}
+
+.color-card strong{
+  font-size:.86rem;
+}
+
+.color-card.turquoise{border-top:6px solid #00b4d8;}
+.color-card.yellow{border-top:6px solid #f2c94c;}
+.color-card.pink{border-top:6px solid #e8539b;}
+.color-card.green{border-top:6px solid #2e7d32;}
+.color-card.orange{border-top:6px solid #f2994a;}
+
+.challenge-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:20px;
+  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+}
+
+.challenge-card h3{
+  font-family:var(--font-display);
+  margin:0 0 12px;
+  font-size:1.35rem;
+}
+
+.challenge-card h4{
+  margin:16px 0 8px;
+  color:var(--teal-deep);
+  font-size:.95rem;
+}
+
+.rules-list{
+  margin:0;
+  padding-left:20px;
+  color:var(--ink-soft);
+  font-size:.9rem;
+}
+
+.rules-list li{
+  margin-bottom:7px;
+}
+
+.rules-list strong{
+  color:var(--coral-deep);
+}
+
+.awards-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.awards-grid span{
+  background:rgba(32,48,61,.06);
+  border:1px dashed var(--line);
+  border-radius:14px;
+  padding:12px;
+  font-weight:700;
+  font-size:.86rem;
+  text-align:center;
+}
+
+.challenge-note{
+  color:var(--ink-soft);
+  font-size:.86rem;
+  margin-top:-6px;
+}
+
+.color-score-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:420px;
+  font-size:.9rem;
+}
+
+.color-score-table th,
+.color-score-table td{
+  padding:10px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+
+.color-score-table th{
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  color:var(--ink-soft);
+}
+
+.color-score-table input{
+  width:100%;
+  max-width:110px;
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  padding:8px 10px;
+  font-family:var(--font-mono);
+  background:#fff;
+}
+
+.daily-challenge button{
+  border:none;
+  background:var(--ink);
+  color:var(--gold-tint);
+  border-radius:999px;
+  padding:10px 18px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.daily-challenge button:hover{
+  transform:translateY(-1px);
+}
+
+#daily-color-challenge-result{
+  margin:14px 0 0;
+  font-family:var(--font-hand);
+  font-size:1.45rem;
+  color:var(--coral-deep);
+}
+
+@media(max-width:860px){
+  .color-grid,
+  .awards-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:520px){
+  .color-grid,
+  .awards-grid{
+    grid-template-columns:1fr;
+  }
+
+  .challenge-card{
+    padding:16px;
+  }
+
+  #daily-color-challenge-result{
+    font-size:1.25rem;
+  }
+}
+  
 </style>
 </head>
 <body>
@@ -384,6 +551,7 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
          tabindex="-1">
         🏆 Competición
      </button>
+      <button role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
     </nav>
   </div>
 </header>
@@ -619,7 +787,86 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
       <div class="cabo-grid" id="cabo-challenges"></div>
     </div>
   </section>
-  
+  <section class="panel" id="panel-colorchallenge" role="tabpanel" aria-labelledby="tab-btn-colorchallenge" hidden>
+  <div class="section-head">
+    <h2>🌈 Color Challenge – Cabo Verde 2026</h2>
+    <p>Durante el viaje cada participante debe fotografiar objetos, paisajes, comidas, animales o situaciones de su color asignado.</p>
+  </div>
+
+  <div class="color-grid">
+    <article class="color-card turquoise"><span>🌊 Andrea</span><strong>Azul Turquesa</strong></article>
+    <article class="color-card yellow"><span>🌻 Ira</span><strong>Amarillo</strong></article>
+    <article class="color-card pink"><span>🌺 Oihane</span><strong>Rosa</strong></article>
+    <article class="color-card green"><span>🍃 Ire</span><strong>Verde</strong></article>
+    <article class="color-card orange"><span>🔥 Ilargi</span><strong>Naranja</strong></article>
+  </div>
+
+  <div class="challenge-card">
+    <h3>🏆 Reglas del Juego</h3>
+
+    <h4>Puntuación</h4>
+    <ul class="rules-list">
+      <li>📸 Foto de un objeto del color → <strong>1 punto</strong></li>
+      <li>🌿 Foto de una planta o animal del color → <strong>2 puntos</strong></li>
+      <li>🍹 Foto de comida o bebida del color → <strong>3 puntos</strong></li>
+      <li>🎨 Foto especialmente creativa → <strong>5 puntos</strong></li>
+      <li>🤳 Selfie donde predomine el color → <strong>5 puntos</strong></li>
+    </ul>
+
+    <h4>Bonus</h4>
+    <ul class="rules-list">
+      <li>🌍 Encontrar el color en Cabo Verde, Portugal y España → <strong>+10 puntos</strong></li>
+      <li>🎯 Conseguir 10 fotos distintas del color en un día → <strong>+5 puntos</strong></li>
+      <li>😂 Foto más divertida del día, por votación grupal → <strong>+5 puntos</strong></li>
+    </ul>
+
+    <h4>Penalización</h4>
+    <ul class="rules-list">
+      <li>❌ Fotografiar intencionadamente el color de otra participante → <strong>-2 puntos</strong></li>
+    </ul>
+  </div>
+
+  <div class="challenge-card">
+    <h3>🏅 Categorías Finales</h3>
+    <div class="awards-grid">
+      <span>🥇 Reina del Color</span>
+      <span>📸 Mejor Foto</span>
+      <span>😂 Foto Más Divertida</span>
+      <span>🔍 Mejor Cazadora de Colores</span>
+      <span>🏝️ Espíritu Viajero</span>
+    </div>
+  </div>
+
+  <div class="challenge-card">
+    <h3>📊 Tabla de puntos</h3>
+    <p class="challenge-note">Puedes editar los puntos directamente. Se guardan en este navegador.</p>
+
+    <div class="table-scroll">
+      <table class="color-score-table">
+        <thead>
+          <tr>
+            <th>Participante</th>
+            <th>Color</th>
+            <th>Puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>🌊 Andrea</td><td>Azul Turquesa</td><td><input type="number" value="0" data-player="Andrea"></td></tr>
+          <tr><td>🌻 Ira</td><td>Amarillo</td><td><input type="number" value="0" data-player="Ira"></td></tr>
+          <tr><td>🌺 Oihane</td><td>Rosa</td><td><input type="number" value="0" data-player="Oihane"></td></tr>
+          <tr><td>🍃 Ire</td><td>Verde</td><td><input type="number" value="0" data-player="Ire"></td></tr>
+          <tr><td>🔥 Ilargi</td><td>Naranja</td><td><input type="number" value="0" data-player="Ilargi"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="challenge-card daily-challenge">
+    <h3>🎲 Sorteo de reto diario</h3>
+    <button type="button" id="daily-color-challenge-btn">🎲 Sorteo de reto diario</button>
+    <p id="daily-color-challenge-result">Pulsa el botón para descubrir el reto de hoy.</p>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">
@@ -1454,6 +1701,67 @@ function initCompetition(){
 }
 document.addEventListener('DOMContentLoaded', initCompetition);
 </script>
+<script>
+(function(){
+  const colorChallenges = [
+    'Encontrar un coche de tu color',
+    'Encontrar una bebida de tu color',
+    'Hacer una selfie grupal con tu color',
+    'Encontrar una puerta de tu color',
+    'Encontrar una flor de tu color',
+    'Encontrar un animal de tu color',
+    'Encontrar una prenda de ropa de tu color',
+    'Encontrar algo de tu color en la playa'
+  ];
 
+  const challengeBtn = document.getElementById('daily-color-challenge-btn');
+  const challengeResult = document.getElementById('daily-color-challenge-result');
+
+  if(challengeBtn && challengeResult){
+    challengeBtn.addEventListener('click', function(){
+      const randomChallenge = colorChallenges[Math.floor(Math.random() * colorChallenges.length)];
+      challengeResult.textContent = '🌈 ' + randomChallenge;
+    });
+  }
+
+  const scoreInputs = document.querySelectorAll('.color-score-table input[data-player]');
+
+  scoreInputs.forEach(function(input){
+    const key = 'colorChallengeScore_' + input.dataset.player;
+    const savedValue = localStorage.getItem(key);
+
+    if(savedValue !== null){
+      input.value = savedValue;
+    }
+
+    input.addEventListener('input', function(){
+      localStorage.setItem(key, input.value);
+    });
+  });
+
+  document.querySelectorAll('[data-tab="colorchallenge"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.panel').forEach(function(panel){
+        panel.hidden = true;
+        panel.classList.remove('active');
+      });
+
+      document.querySelectorAll('[role="tab"]').forEach(function(tab){
+        tab.setAttribute('aria-selected', 'false');
+        tab.setAttribute('tabindex', '-1');
+      });
+
+      const panel = document.getElementById('panel-colorchallenge');
+      if(panel){
+        panel.hidden = false;
+        panel.classList.add('active');
+      }
+
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+    });
+  });
+})();
+</script>
 </body>
 </html>
