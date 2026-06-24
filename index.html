@@ -582,6 +582,206 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
 }
 @media(max-width:420px){.tabs-dropdown-toggle span{display:none;}}
 
+
+/* Weather */
+.weather-help{background:var(--gold-tint);border:1px solid rgba(201,125,20,.35);color:#5b3a0b;border-radius:14px;padding:12px 14px;margin:14px 0 18px;font-size:.88rem;}
+.weather-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;}
+.weather-filter{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--ink-soft);}
+.weather-filter[aria-pressed="true"]{background:var(--teal-tint);border-color:var(--teal);color:var(--teal-deep);}
+.weather-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+.weather-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -10px rgba(32,48,61,.25);position:relative;overflow:hidden;}
+.weather-card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--teal);opacity:.85;}
+.weather-card[data-country="euskal"]::before{background:var(--euskal);}
+.weather-card[data-country="espana"]::before{background:var(--gold);}
+.weather-card[data-country="portugal"]::before{background:var(--coral);}
+.weather-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px;}
+.weather-date{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);text-transform:uppercase;}
+.weather-place{font-family:var(--font-display);font-size:1.15rem;font-weight:800;margin:2px 0 0;}
+.weather-route{font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
+.weather-icon{font-size:2rem;line-height:1;}
+.weather-main{display:flex;align-items:flex-end;gap:8px;margin:10px 0;}
+.weather-temp{font-family:var(--font-display);font-size:2rem;font-weight:800;}
+.weather-range{color:var(--ink-soft);font-size:.82rem;margin-bottom:6px;}
+.weather-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:12px;}
+.weather-meta span{background:rgba(32,48,61,.06);border-radius:10px;padding:7px 8px;font-size:.78rem;}
+.weather-note{font-style:italic;border-left:2px solid var(--line);padding-left:10px;color:var(--ink-soft);font-size:.82rem;margin:12px 0 0;}
+.weather-status{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 9px;font-size:.68rem;font-weight:800;background:var(--teal-tint);color:var(--teal-deep);}
+.weather-status.manual{background:var(--gold-tint);color:var(--gold-deep);}
+.weather-error{background:var(--coral-tint);color:var(--coral-deep);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:.85rem;}
+@media(max-width:520px){.weather-grid{grid-template-columns:1fr}.weather-meta{grid-template-columns:1fr}.weather-top{align-items:center}.weather-temp{font-size:1.7rem}}
+
+/* Quiz */
+.quiz-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  align-items:start;
+}
+
+.quiz-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+}
+
+.quiz-top{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:16px;
+}
+
+.quiz-kicker{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  color:var(--teal-deep);
+  background:var(--teal-tint);
+  border-radius:999px;
+  padding:4px 10px;
+  margin-bottom:8px;
+}
+
+.quiz-card h3{
+  font-family:var(--font-display);
+  margin:0 0 12px;
+  font-size:1.35rem;
+}
+
+.quiz-status{
+  font-size:.72rem;
+  font-weight:800;
+  border-radius:999px;
+  padding:5px 10px;
+  background:var(--gold-tint);
+  color:var(--gold-deep);
+  white-space:nowrap;
+}
+
+.quiz-player-label{
+  display:block;
+  font-weight:800;
+  color:var(--ink-soft);
+  font-size:.82rem;
+  margin-bottom:16px;
+}
+
+.quiz-player-label select{
+  margin-top:6px;
+  width:100%;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:#fff;
+  font-family:var(--font-body);
+}
+
+.quiz-options{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+
+.quiz-option{
+  border:1.5px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:12px 14px;
+  cursor:pointer;
+  font-weight:700;
+  text-align:left;
+}
+
+.quiz-option[aria-pressed="true"]{
+  border-color:var(--teal);
+  background:var(--teal-tint);
+  color:var(--teal-deep);
+}
+
+.quiz-btn,
+.quiz-curiosity-btn{
+  border:none;
+  border-radius:999px;
+  padding:11px 18px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:var(--font-body);
+}
+
+.quiz-btn{
+  background:var(--ink);
+  color:var(--gold-tint);
+}
+
+.quiz-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.quiz-curiosity-btn{
+  margin-top:12px;
+  background:var(--coral-tint);
+  color:var(--coral-deep);
+}
+
+.quiz-result,
+.quiz-curiosity{
+  margin-top:16px;
+  border-radius:14px;
+  padding:14px 16px;
+  line-height:1.45;
+}
+
+.quiz-result{
+  background:rgba(32,48,61,.06);
+  border:1px dashed var(--line);
+}
+
+.quiz-result.correct{
+  background:var(--teal-tint);
+  color:var(--teal-deep);
+}
+
+.quiz-result.wrong{
+  background:var(--coral-tint);
+  color:var(--coral-deep);
+}
+
+.quiz-curiosity{
+  background:var(--gold-tint);
+  color:var(--gold-deep);
+  font-weight:700;
+}
+
+.quiz-rank-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-weight:800;
+}
+
+.quiz-rank-item:first-child{
+  background:var(--gold-tint);
+  border-radius:12px;
+  padding:10px 12px;
+  border-bottom:none;
+  margin-bottom:6px;
+}
+
+.quiz-rank-item span:last-child{
+  font-family:var(--font-mono);
+  color:var(--coral-deep);
+}
+
+@media(max-width:760px){
+  .quiz-grid{grid-template-columns:1fr;}
+  .quiz-top{flex-direction:column;}
+}
 </style>
 </head>
 <body>
@@ -593,21 +793,21 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
       <div class="mini-countdown" id="mini-cd" title="Días para el despegue">🛫 <b id="mini-cd-days">--</b> días</div>
     </div>
     <nav class="tabs main-nav" aria-label="Secciones">
-      <button role="tab" id="tab-btn-portada" aria-controls="panel-portada" aria-selected="true" data-tab="portada">🛫 Embarque</button>
+      <button type="button" role="tab" id="tab-btn-portada" aria-controls="panel-portada" aria-selected="true" data-tab="portada">🛫 Embarque</button>
 
       <div class="tabs-dropdown">
         <button type="button" class="tabs-dropdown-toggle" id="tabs-dropdown-toggle" aria-expanded="false" aria-controls="tabs-dropdown-menu">
           ☰ Secciones
-          <span id="tabs-current-label">Itinerario</span>
+          <span id="tabs-current-label">Secciones</span>
         </button>
         <div class="tabs-dropdown-menu" id="tabs-dropdown-menu" hidden>
-          <button role="tab" id="tab-btn-itinerario" aria-controls="panel-itinerario" aria-selected="false" data-tab="itinerario" tabindex="-1">🗺️ Itinerario</button>
-          <button role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
-          <button role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
-          <button role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
-          <button role="tab" id="tab-btn-competicion" aria-controls="panel-competicion" aria-selected="false" data-tab="competicion" tabindex="-1">🏆 Competición</button>
-          <button role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
-          <button role="tab" id="tab-btn-quiz" aria-controls="panel-quiz" aria-selected="false" data-tab="quiz" tabindex="-1">🧠 Quiz</button>
+          <button type="button" role="tab" id="tab-btn-itinerario" aria-controls="panel-itinerario" aria-selected="false" data-tab="itinerario" tabindex="-1">🗺️ Itinerario</button>
+          <button type="button" role="tab" id="tab-btn-checklist" aria-controls="panel-checklist" aria-selected="false" data-tab="checklist" tabindex="-1">🎒 Maleta</button>
+          <button type="button" role="tab" id="tab-btn-presupuesto" aria-controls="panel-presupuesto" aria-selected="false" data-tab="presupuesto" tabindex="-1">💶 Presupuesto</button>
+          <button type="button" role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
+          <button type="button" role="tab" id="tab-btn-competicion" aria-controls="panel-competicion" aria-selected="false" data-tab="competicion" tabindex="-1">🏆 Competición</button>
+          <button type="button" role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
+          <button type="button" role="tab" id="tab-btn-quiz" aria-controls="panel-quiz" aria-selected="false" data-tab="quiz" tabindex="-1">🧠 Quiz</button>
         </div>
       </div>
     </nav>
@@ -761,33 +961,6 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
     </div>
   </section>
 
-<style>
-.weather-help{background:var(--gold-tint);border:1px solid rgba(201,125,20,.35);color:#5b3a0b;border-radius:14px;padding:12px 14px;margin:14px 0 18px;font-size:.88rem;}
-.weather-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;}
-.weather-filter{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:7px 13px;font-size:.82rem;font-weight:700;cursor:pointer;color:var(--ink-soft);}
-.weather-filter[aria-pressed="true"]{background:var(--teal-tint);border-color:var(--teal);color:var(--teal-deep);}
-.weather-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
-.weather-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 6px 18px -10px rgba(32,48,61,.25);position:relative;overflow:hidden;}
-.weather-card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--teal);opacity:.85;}
-.weather-card[data-country="euskal"]::before{background:var(--euskal);}
-.weather-card[data-country="espana"]::before{background:var(--gold);}
-.weather-card[data-country="portugal"]::before{background:var(--coral);}
-.weather-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px;}
-.weather-date{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);text-transform:uppercase;}
-.weather-place{font-family:var(--font-display);font-size:1.15rem;font-weight:800;margin:2px 0 0;}
-.weather-route{font-size:.8rem;color:var(--ink-soft);margin-top:2px;}
-.weather-icon{font-size:2rem;line-height:1;}
-.weather-main{display:flex;align-items:flex-end;gap:8px;margin:10px 0;}
-.weather-temp{font-family:var(--font-display);font-size:2rem;font-weight:800;}
-.weather-range{color:var(--ink-soft);font-size:.82rem;margin-bottom:6px;}
-.weather-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:12px;}
-.weather-meta span{background:rgba(32,48,61,.06);border-radius:10px;padding:7px 8px;font-size:.78rem;}
-.weather-note{font-style:italic;border-left:2px solid var(--line);padding-left:10px;color:var(--ink-soft);font-size:.82rem;margin:12px 0 0;}
-.weather-status{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 9px;font-size:.68rem;font-weight:800;background:var(--teal-tint);color:var(--teal-deep);}
-.weather-status.manual{background:var(--gold-tint);color:var(--gold-deep);}
-.weather-error{background:var(--coral-tint);color:var(--coral-deep);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:.85rem;}
-@media(max-width:520px){.weather-grid{grid-template-columns:1fr}.weather-meta{grid-template-columns:1fr}.weather-top{align-items:center}.weather-temp{font-size:1.7rem}}
-</style>
 
   <!-- COMPETICIÓN -->
   <section class="panel" id="panel-competicion" role="tabpanel" aria-labelledby="tab-btn-competicion" hidden>
@@ -1020,178 +1193,6 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
 </footer>
 
 <div id="confetti-layer" aria-hidden="true"></div>
-.quiz-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr;
-  gap:20px;
-  align-items:start;
-}
-
-.quiz-card{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:20px;
-  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
-}
-
-.quiz-top{
-  display:flex;
-  justify-content:space-between;
-  gap:14px;
-  align-items:flex-start;
-  margin-bottom:16px;
-}
-
-.quiz-kicker{
-  display:inline-block;
-  font-family:var(--font-mono);
-  font-size:.72rem;
-  color:var(--teal-deep);
-  background:var(--teal-tint);
-  border-radius:999px;
-  padding:4px 10px;
-  margin-bottom:8px;
-}
-
-.quiz-card h3{
-  font-family:var(--font-display);
-  margin:0 0 12px;
-  font-size:1.35rem;
-}
-
-.quiz-status{
-  font-size:.72rem;
-  font-weight:800;
-  border-radius:999px;
-  padding:5px 10px;
-  background:var(--gold-tint);
-  color:var(--gold-deep);
-  white-space:nowrap;
-}
-
-.quiz-player-label{
-  display:block;
-  font-weight:800;
-  color:var(--ink-soft);
-  font-size:.82rem;
-  margin-bottom:16px;
-}
-
-.quiz-player-label select{
-  margin-top:6px;
-  width:100%;
-  border:1.5px solid var(--line);
-  border-radius:12px;
-  padding:10px 12px;
-  background:#fff;
-  font-family:var(--font-body);
-}
-
-.quiz-options{
-  display:grid;
-  gap:10px;
-  margin:16px 0;
-}
-
-.quiz-option{
-  border:1.5px solid var(--line);
-  background:#fff;
-  border-radius:14px;
-  padding:12px 14px;
-  cursor:pointer;
-  font-weight:700;
-  text-align:left;
-}
-
-.quiz-option[aria-pressed="true"]{
-  border-color:var(--teal);
-  background:var(--teal-tint);
-  color:var(--teal-deep);
-}
-
-.quiz-btn,
-.quiz-curiosity-btn{
-  border:none;
-  border-radius:999px;
-  padding:11px 18px;
-  font-weight:900;
-  cursor:pointer;
-  font-family:var(--font-body);
-}
-
-.quiz-btn{
-  background:var(--ink);
-  color:var(--gold-tint);
-}
-
-.quiz-btn:disabled{
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-.quiz-curiosity-btn{
-  margin-top:12px;
-  background:var(--coral-tint);
-  color:var(--coral-deep);
-}
-
-.quiz-result,
-.quiz-curiosity{
-  margin-top:16px;
-  border-radius:14px;
-  padding:14px 16px;
-  line-height:1.45;
-}
-
-.quiz-result{
-  background:rgba(32,48,61,.06);
-  border:1px dashed var(--line);
-}
-
-.quiz-result.correct{
-  background:var(--teal-tint);
-  color:var(--teal-deep);
-}
-
-.quiz-result.wrong{
-  background:var(--coral-tint);
-  color:var(--coral-deep);
-}
-
-.quiz-curiosity{
-  background:var(--gold-tint);
-  color:var(--gold-deep);
-  font-weight:700;
-}
-
-.quiz-rank-item{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:10px 0;
-  border-bottom:1px solid var(--line);
-  font-weight:800;
-}
-
-.quiz-rank-item:first-child{
-  background:var(--gold-tint);
-  border-radius:12px;
-  padding:10px 12px;
-  border-bottom:none;
-  margin-bottom:6px;
-}
-
-.quiz-rank-item span:last-child{
-  font-family:var(--font-mono);
-  color:var(--coral-deep);
-}
-
-@media(max-width:760px){
-  .quiz-grid{grid-template-columns:1fr;}
-  .quiz-top{flex-direction:column;}
-}
-  
 <script>
 /* ============================================================
    ITINERARY DATA (actualizado con documento nuevo)
@@ -1629,7 +1630,8 @@ function activateTab(name){
     presupuesto:'Presupuesto',
     tiempo:'Tiempo',
     competicion:'Competición',
-    colorchallenge:'Color Challenge'
+    colorchallenge:'Color Challenge',
+    quiz:'Quiz'
   };
   tabButtons.forEach(btn=>{
     const isSel = btn.dataset.tab === name;
@@ -1642,7 +1644,7 @@ function activateTab(name){
     else{panel.hidden=true;panel.classList.remove('active');}
   });
   const currentLabel = document.getElementById('tabs-current-label');
-  if(currentLabel && name !== 'portada') currentLabel.textContent = labels[name] || 'Secciones';
+  if(currentLabel) currentLabel.textContent = (name === 'portada') ? 'Secciones' : (labels[name] || 'Secciones');
   closeTabsDropdown();
 }
 tabButtons.forEach(btn=>btn.addEventListener('click',()=>activateTab(btn.dataset.tab)));
