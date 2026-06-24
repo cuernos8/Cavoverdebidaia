@@ -607,6 +607,7 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
           <button role="tab" id="tab-btn-tiempo" aria-controls="panel-tiempo" aria-selected="false" data-tab="tiempo" tabindex="-1">🌤️ Tiempo</button>
           <button role="tab" id="tab-btn-competicion" aria-controls="panel-competicion" aria-selected="false" data-tab="competicion" tabindex="-1">🏆 Competición</button>
           <button role="tab" id="tab-btn-colorchallenge" aria-controls="panel-colorchallenge" aria-selected="false" data-tab="colorchallenge" tabindex="-1">🌈 Color Challenge</button>
+          <button role="tab" id="tab-btn-quiz" aria-controls="panel-quiz" aria-selected="false" data-tab="quiz" tabindex="-1">🧠 Quiz</button>
         </div>
       </div>
     </nav>
@@ -974,6 +975,43 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
     <p id="daily-color-challenge-result">Pulsa el botón para descubrir el reto de hoy.</p>
   </div>
 </section>
+  <section class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-btn-quiz" hidden>
+  <div class="section-head">
+    <h2>🧠 Quiz del Viaje</h2>
+    <p>¿Cuánto sabes sobre el lugar que estamos visitando hoy? Responde a la pregunta diaria y descubre curiosidades de Cabo Verde.</p>
+  </div>
+
+  <div class="quiz-grid">
+    <div class="quiz-card quiz-main-card">
+      <div class="quiz-top">
+        <div>
+          <span class="quiz-kicker" id="quiz-day-label">Día --</span>
+          <h3 id="quiz-question">Pregunta del día</h3>
+        </div>
+        <span class="quiz-status" id="quiz-lock-status">Bloqueado</span>
+      </div>
+
+      <label class="quiz-player-label">
+        ¿Quién responde?
+        <select id="quiz-player"></select>
+      </label>
+
+      <div id="quiz-options" class="quiz-options"></div>
+
+      <button id="quiz-submit" class="quiz-btn">Responder</button>
+
+      <div id="quiz-result" class="quiz-result" hidden></div>
+
+      <button id="quiz-curiosity-btn" class="quiz-curiosity-btn">🎲 Dato curioso</button>
+      <div id="quiz-curiosity" class="quiz-curiosity" hidden></div>
+    </div>
+
+    <div class="quiz-card">
+      <h3>🥇 Clasificación Quiz</h3>
+      <div id="quiz-ranking"></div>
+    </div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">
@@ -982,7 +1020,178 @@ nav.tabs button{white-space:nowrap;flex:0 0 auto;}
 </footer>
 
 <div id="confetti-layer" aria-hidden="true"></div>
+.quiz-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  align-items:start;
+}
 
+.quiz-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:0 6px 18px -10px rgba(32,48,61,.25);
+}
+
+.quiz-top{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:16px;
+}
+
+.quiz-kicker{
+  display:inline-block;
+  font-family:var(--font-mono);
+  font-size:.72rem;
+  color:var(--teal-deep);
+  background:var(--teal-tint);
+  border-radius:999px;
+  padding:4px 10px;
+  margin-bottom:8px;
+}
+
+.quiz-card h3{
+  font-family:var(--font-display);
+  margin:0 0 12px;
+  font-size:1.35rem;
+}
+
+.quiz-status{
+  font-size:.72rem;
+  font-weight:800;
+  border-radius:999px;
+  padding:5px 10px;
+  background:var(--gold-tint);
+  color:var(--gold-deep);
+  white-space:nowrap;
+}
+
+.quiz-player-label{
+  display:block;
+  font-weight:800;
+  color:var(--ink-soft);
+  font-size:.82rem;
+  margin-bottom:16px;
+}
+
+.quiz-player-label select{
+  margin-top:6px;
+  width:100%;
+  border:1.5px solid var(--line);
+  border-radius:12px;
+  padding:10px 12px;
+  background:#fff;
+  font-family:var(--font-body);
+}
+
+.quiz-options{
+  display:grid;
+  gap:10px;
+  margin:16px 0;
+}
+
+.quiz-option{
+  border:1.5px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  padding:12px 14px;
+  cursor:pointer;
+  font-weight:700;
+  text-align:left;
+}
+
+.quiz-option[aria-pressed="true"]{
+  border-color:var(--teal);
+  background:var(--teal-tint);
+  color:var(--teal-deep);
+}
+
+.quiz-btn,
+.quiz-curiosity-btn{
+  border:none;
+  border-radius:999px;
+  padding:11px 18px;
+  font-weight:900;
+  cursor:pointer;
+  font-family:var(--font-body);
+}
+
+.quiz-btn{
+  background:var(--ink);
+  color:var(--gold-tint);
+}
+
+.quiz-btn:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.quiz-curiosity-btn{
+  margin-top:12px;
+  background:var(--coral-tint);
+  color:var(--coral-deep);
+}
+
+.quiz-result,
+.quiz-curiosity{
+  margin-top:16px;
+  border-radius:14px;
+  padding:14px 16px;
+  line-height:1.45;
+}
+
+.quiz-result{
+  background:rgba(32,48,61,.06);
+  border:1px dashed var(--line);
+}
+
+.quiz-result.correct{
+  background:var(--teal-tint);
+  color:var(--teal-deep);
+}
+
+.quiz-result.wrong{
+  background:var(--coral-tint);
+  color:var(--coral-deep);
+}
+
+.quiz-curiosity{
+  background:var(--gold-tint);
+  color:var(--gold-deep);
+  font-weight:700;
+}
+
+.quiz-rank-item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-weight:800;
+}
+
+.quiz-rank-item:first-child{
+  background:var(--gold-tint);
+  border-radius:12px;
+  padding:10px 12px;
+  border-bottom:none;
+  margin-bottom:6px;
+}
+
+.quiz-rank-item span:last-child{
+  font-family:var(--font-mono);
+  color:var(--coral-deep);
+}
+
+@media(max-width:760px){
+  .quiz-grid{grid-template-columns:1fr;}
+  .quiz-top{flex-direction:column;}
+}
+  
 <script>
 /* ============================================================
    ITINERARY DATA (actualizado con documento nuevo)
@@ -1387,6 +1596,7 @@ const panels = {
   tiempo: document.getElementById('panel-tiempo'),
   competicion: document.getElementById('panel-competicion'),
   colorchallenge: document.getElementById('panel-colorchallenge')
+  quiz: document.getElementById('panel-quiz')
 };
 const dropdownToggle = document.getElementById('tabs-dropdown-toggle');
 const dropdownMenu = document.getElementById('tabs-dropdown-menu');
@@ -1697,6 +1907,356 @@ function updateProgress(){
     updateProgress();
   });
 })();
+  /* ============================================================
+   QUIZ DEL VIAJE
+   ============================================================ */
+
+const QUIZ_PEOPLE = ['Andrea', 'Ira', 'Oihane', 'Ire', 'Ilargi'];
+const QUIZ_STORAGE_KEY = 'cabo-verde-quiz-v1';
+const QUIZ_TRIP_START = '2026-08-05T00:00:00';
+
+const QUIZ_DAYS = [
+  {
+    day:1,
+    date:'2026-08-05',
+    label:'Mié 5 Ago · Salamanca',
+    question:'¿Qué detalle curioso hay que buscar en la fachada de la Universidad de Salamanca?',
+    options:['Una rana', 'Un barco', 'Un león azul', 'Una sirena'],
+    correct:0,
+    explanation:'La rana de la Universidad de Salamanca es uno de los símbolos más famosos de la ciudad. La tradición dice que quien la encuentra tendrá suerte en los estudios.',
+    curiosities:[
+      'La Casa de las Conchas tiene más de 300 conchas de piedra en su fachada.',
+      'En la Catedral Nueva de Salamanca hay un astronauta esculpido como guiño moderno durante una restauración.'
+    ]
+  },
+  {
+    day:2,
+    date:'2026-08-06',
+    label:'Jue 6 Ago · Mindelo',
+    question:'¿Por qué Mindelo es una ciudad tan importante para la cultura caboverdiana?',
+    options:['Por ser la capital cultural y cuna de Cesária Évora', 'Por tener el volcán más alto', 'Por sus minas de oro', 'Por ser la isla más lluviosa'],
+    correct:0,
+    explanation:'Mindelo, en São Vicente, es conocida por su vida musical y por ser la ciudad natal de Cesária Évora, una de las grandes voces de Cabo Verde.',
+    curiosities:[
+      'Cesária Évora era conocida como la “diva de los pies descalzos”.',
+      'La morna mezcla voz, poesía, música y emoción; es una de las señas culturales de Cabo Verde.'
+    ]
+  },
+  {
+    day:3,
+    date:'2026-08-07',
+    label:'Vie 7 Ago · São Vicente',
+    question:'¿Cuál es el punto más alto y mejor mirador de São Vicente que aparece en vuestro tour?',
+    options:['Monte Verde', 'Pico do Fogo', 'Serra da Estrela', 'Cabo da Roca'],
+    correct:0,
+    explanation:'Monte Verde alcanza unos 774 metros y ofrece una de las mejores vistas de São Vicente. En días despejados se puede ver Santo Antão.',
+    curiosities:[
+      'Baía das Gatas es famosa por su piscina natural protegida.',
+      'Calhau destaca por sus paisajes volcánicos y formaciones de lava.'
+    ]
+  },
+  {
+    day:4,
+    date:'2026-08-08',
+    label:'Sáb 8 Ago · Santo Antão',
+    question:'¿Qué tipo de paisaje caracteriza especialmente a Santo Antão?',
+    options:['Valles verdes y terrazas agrícolas', 'Dunas infinitas', 'Glaciares', 'Selva amazónica'],
+    correct:0,
+    explanation:'Santo Antão es una de las islas más verdes de Cabo Verde. Sus valles, montañas y terrazas agrícolas contrastan con las islas más áridas.',
+    curiosities:[
+      'El trayecto desde Porto Novo hacia el interior cruza carreteras de montaña muy escénicas.',
+      'Las terrazas agrícolas permiten cultivar en laderas muy inclinadas.'
+    ]
+  },
+  {
+    day:5,
+    date:'2026-08-09',
+    label:'Dom 9 Ago · Valle de Paul',
+    question:'¿Qué bebida tradicional se asocia mucho con Santo Antão?',
+    options:['Grogue', 'Sangría', 'Limoncello', 'Sidra'],
+    correct:0,
+    explanation:'El grogue es un aguardiente de caña típico de Cabo Verde. En Santo Antão es habitual visitar destilerías tradicionales donde se elabora de forma local.',
+    curiosities:[
+      'El Valle de Paul es una de las zonas más verdes y fértiles del archipiélago.',
+      'En Santo Antão también se prueban platos como cachupa casera, xerém y cuscuz caboverdiano.'
+    ]
+  },
+  {
+    day:6,
+    date:'2026-08-10',
+    label:'Lun 10 Ago · Mindelo → Sal',
+    question:'¿Qué plato aparece como “no saltárselo” durante la escala en Mindelo?',
+    options:['Cachupa', 'Paella', 'Ramen', 'Pizza napolitana'],
+    correct:0,
+    explanation:'La cachupa es uno de los platos más representativos de Cabo Verde. Suele prepararse con maíz, legumbres, verduras y, según la versión, carne o pescado.',
+    curiosities:[
+      'La cachupa rica suele llevar más ingredientes que la versión sencilla.',
+      'En Cabo Verde también son populares los ponches de frutas tropicales.'
+    ]
+  },
+  {
+    day:7,
+    date:'2026-08-11',
+    label:'Mar 11 Ago · Sal',
+    question:'¿Qué hace especial a las Salinas de Pedra de Lume?',
+    options:['Están dentro del cráter de un volcán extinto', 'Son una cueva de hielo', 'Son una playa de arena negra', 'Son un bosque tropical'],
+    correct:0,
+    explanation:'Las Salinas de Pedra de Lume se encuentran dentro de un antiguo cráter volcánico en la isla de Sal. El paisaje mezcla historia salinera y geología volcánica.',
+    curiosities:[
+      'La isla de Sal debe su nombre a la importancia histórica de la sal.',
+      'En Pedra de Lume el agua salada permite flotar con mucha facilidad.'
+    ]
+  },
+  {
+    day:8,
+    date:'2026-08-12',
+    label:'Mié 12 Ago · Santa María',
+    question:'¿Qué actividad del itinerario depende más del estado del mar?',
+    options:['Snorkel', 'Visitar una catedral', 'Subir a un tranvía', 'Ver una universidad'],
+    correct:0,
+    explanation:'El snorkel depende mucho del oleaje, el viento y la visibilidad del agua. Por eso conviene revisar el mar antes de lanzarse.',
+    curiosities:[
+      'Santa María es una de las zonas de playa más conocidas de Sal.',
+      'El viento alisio influye mucho en las actividades acuáticas de Cabo Verde.'
+    ]
+  },
+  {
+    day:9,
+    date:'2026-08-13',
+    label:'Jue 13 Ago · Sal → Lisboa',
+    question:'¿En qué barrio de Lisboa está vuestro alojamiento?',
+    options:['Bica', 'Alfama', 'Belém', 'Parque das Nações'],
+    correct:0,
+    explanation:'El itinerario indica alojamiento en Bica. Es un barrio con mucho encanto, conocido por sus calles inclinadas y el Elevador da Bica.',
+    curiosities:[
+      'El Mirador de Santa Catarina tiene vistas al río Tajo.',
+      'El fado es una de las expresiones musicales más conocidas de Portugal.'
+    ]
+  },
+  {
+    day:10,
+    date:'2026-08-14',
+    label:'Vie 14 Ago · Lisboa',
+    question:'¿Qué dulce aparece como obligatorio en la visita a Belém?',
+    options:['Pastéis de Belém', 'Tarta de Santiago', 'Cannoli', 'Churros'],
+    correct:0,
+    explanation:'Los Pastéis de Belém son una versión emblemática del pastel de nata portugués. En Belém se prueban en su fábrica histórica.',
+    curiosities:[
+      'El tranvía 28 es famoso por atravesar barrios históricos como Alfama.',
+      'Lisboa tiene muchos miradores porque está construida sobre colinas.'
+    ]
+  },
+  {
+    day:11,
+    date:'2026-08-15',
+    label:'Sáb 15 Ago · Sintra y Cascais',
+    question:'¿Qué punto visitáis que marca el extremo occidental de la Europa continental?',
+    options:['Cabo da Roca', 'Monte Verde', 'Baía das Gatas', 'Praia da Laginha'],
+    correct:0,
+    explanation:'Cabo da Roca es conocido como el punto más occidental de la Europa continental. Suele ser ventoso y muy fotogénico.',
+    curiosities:[
+      'Sintra es más fresca que Lisboa por su ubicación y vegetación.',
+      'Cascais combina costa, paseo marítimo y ambiente veraniego.'
+    ]
+  },
+  {
+    day:12,
+    date:'2026-08-16',
+    label:'Dom 16 Ago · Coímbra',
+    question:'¿Por qué Coímbra es especialmente conocida?',
+    options:['Por su universidad histórica', 'Por sus salinas volcánicas', 'Por su aeropuerto internacional', 'Por sus arrecifes de coral'],
+    correct:0,
+    explanation:'Coímbra es famosa por su universidad, una de las más antiguas de Europa, y por su ambiente estudiantil.',
+    curiosities:[
+      'Coímbra tiene una tradición musical propia ligada al fado universitario.',
+      'La ciudad está marcada por el río Mondego.'
+    ]
+  },
+  {
+    day:13,
+    date:'2026-08-17',
+    label:'Lun 17 Ago · Salamanca',
+    question:'¿Qué río cruza Salamanca y aparece en las vistas desde el Puente Romano?',
+    options:['Tormes', 'Duero', 'Tajo', 'Ebro'],
+    correct:0,
+    explanation:'El río Tormes pasa por Salamanca. Desde el Puente Romano se obtienen algunas de las vistas más bonitas del casco histórico.',
+    curiosities:[
+      'Salamanca es famosa por el color dorado de su piedra de Villamayor.',
+      'La Plaza Mayor de Salamanca es uno de los grandes iconos barrocos de España.'
+    ]
+  },
+  {
+    day:14,
+    date:'2026-08-18',
+    label:'Mar 18 Ago · Vuelta',
+    question:'¿Qué ciudad aparece como parada de vuelta antes de llegar a Euskal Herria?',
+    options:['Burgos', 'Sevilla', 'Barcelona', 'Valencia'],
+    correct:0,
+    explanation:'El itinerario marca Burgos como parte de la ruta de vuelta. Es una parada perfecta para cerrar el viaje con patrimonio, comida y descanso.',
+    curiosities:[
+      'Burgos es conocida por su catedral gótica.',
+      'El final del viaje también cuenta: parada, café y repaso de momentazos.'
+    ]
+  }
+];
+
+function loadQuizData(){
+  try{
+    return JSON.parse(localStorage.getItem(QUIZ_STORAGE_KEY)) || {answers:{}, scores:{}};
+  }catch(e){
+    return {answers:{}, scores:{}};
+  }
+}
+
+function saveQuizData(data){
+  localStorage.setItem(QUIZ_STORAGE_KEY, JSON.stringify(data));
+}
+
+function getQuizUnlockedDay(){
+  const start = new Date(QUIZ_TRIP_START);
+  const now = new Date();
+  const diff = Math.floor((now - start) / 86400000) + 1;
+  return Math.max(0, Math.min(diff, QUIZ_DAYS.length));
+}
+
+function getTodayQuiz(){
+  const unlocked = getQuizUnlockedDay();
+  if(unlocked <= 0) return QUIZ_DAYS[0];
+  return QUIZ_DAYS[unlocked - 1];
+}
+
+function renderQuizPlayers(){
+  const select = document.getElementById('quiz-player');
+  if(!select) return;
+
+  select.innerHTML = QUIZ_PEOPLE.map(name =>
+    `<option value="${name}">${name}</option>`
+  ).join('');
+}
+
+function renderQuiz(){
+  const panel = document.getElementById('panel-quiz');
+  if(!panel) return;
+
+  renderQuizPlayers();
+
+  const data = loadQuizData();
+  const quiz = getTodayQuiz();
+  const unlocked = getQuizUnlockedDay();
+  const isLocked = unlocked <= 0;
+
+  const dayLabel = document.getElementById('quiz-day-label');
+  const question = document.getElementById('quiz-question');
+  const status = document.getElementById('quiz-lock-status');
+  const optionsWrap = document.getElementById('quiz-options');
+  const result = document.getElementById('quiz-result');
+  const submit = document.getElementById('quiz-submit');
+
+  dayLabel.textContent = `Día ${quiz.day} · ${quiz.label}`;
+  question.textContent = quiz.question;
+  status.textContent = isLocked ? 'Se desbloquea el 5 de agosto' : 'Disponible hoy';
+
+  optionsWrap.innerHTML = quiz.options.map((option, index) => `
+    <button type="button" class="quiz-option" data-index="${index}" aria-pressed="false">
+      ${option}
+    </button>
+  `).join('');
+
+  result.hidden = true;
+  result.className = 'quiz-result';
+  submit.disabled = isLocked;
+
+  let selected = null;
+
+  optionsWrap.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(isLocked) return;
+      selected = Number(btn.dataset.index);
+      optionsWrap.querySelectorAll('.quiz-option').forEach(b => b.setAttribute('aria-pressed','false'));
+      btn.setAttribute('aria-pressed','true');
+    });
+  });
+
+  submit.onclick = () => {
+    const player = document.getElementById('quiz-player').value;
+    const key = `day-${quiz.day}__${player}`;
+
+    if(isLocked) return;
+
+    if(data.answers[key]){
+      result.hidden = false;
+      result.className = 'quiz-result';
+      result.innerHTML = `
+        <strong>Ya has respondido hoy.</strong><br>
+        Tu respuesta queda guardada para mantener el juego limpio.
+      `;
+      return;
+    }
+
+    if(selected === null){
+      result.hidden = false;
+      result.className = 'quiz-result';
+      result.innerHTML = '<strong>Elige una respuesta antes de responder.</strong>';
+      return;
+    }
+
+    const isCorrect = selected === quiz.correct;
+
+    data.answers[key] = {
+      player,
+      day: quiz.day,
+      selected,
+      correct: isCorrect,
+      date: new Date().toISOString()
+    };
+
+    if(!data.scores[player]) data.scores[player] = 0;
+    if(isCorrect) data.scores[player] += 1;
+
+    saveQuizData(data);
+
+    result.hidden = false;
+    result.className = `quiz-result ${isCorrect ? 'correct' : 'wrong'}`;
+    result.innerHTML = isCorrect
+      ? `<strong>✅ ¡Correcto!</strong><br>${quiz.explanation}<br><br><strong>+1 punto para ${player}</strong>`
+      : `<strong>❌ No era la respuesta correcta.</strong><br>La respuesta correcta era: <strong>${quiz.options[quiz.correct]}</strong>.<br>${quiz.explanation}<br><br><strong>+0 puntos para ${player}</strong>`;
+
+    renderQuizRanking();
+  };
+
+  document.getElementById('quiz-curiosity-btn').onclick = () => {
+    const box = document.getElementById('quiz-curiosity');
+    const random = quiz.curiosities[Math.floor(Math.random() * quiz.curiosities.length)];
+    box.hidden = false;
+    box.textContent = random;
+  };
+
+  renderQuizRanking();
+}
+
+function renderQuizRanking(){
+  const wrap = document.getElementById('quiz-ranking');
+  if(!wrap) return;
+
+  const data = loadQuizData();
+  const scores = {};
+
+  QUIZ_PEOPLE.forEach(name => {
+    scores[name] = data.scores[name] || 0;
+  });
+
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+
+  wrap.innerHTML = sorted.map(([name, points], index) => `
+    <div class="quiz-rank-item">
+      <span>${index === 0 ? '👑 ' : ''}${name}</span>
+      <span>${points} pts</span>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', renderQuiz);
+renderQuiz();
 </script>
 
 
