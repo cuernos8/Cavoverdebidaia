@@ -1216,7 +1216,178 @@ const CHECKLIST = [
     {id:'candado', label:'Candado pequeño para la mochila (opcional)'}
   ]}
 ];
+<script>
+const travelPeople = ["Persona 1", "Persona 2", "Persona 3", "Persona 4"]; 
+const travelDays = 10;
 
+const dailyChallengesData = [
+  "🏊 Primera en bañarse",
+  "📸 Mejor foto del día",
+  "🧠 Encontrar un dato curioso",
+  "🍴 Probar comida local nueva",
+  "😂 Hacer reír al grupo",
+  "✅ Completar todos los planes del día"
+];
+
+const specialPointsData = [
+  ["🤸 Caída épica sin daños", 1],
+  ["🎤 Frase legendaria", 2],
+  ["😴 Dormirse en el coche", 1],
+  ["🧭 Confundirse de dirección", -2],
+  ["🎒 Olvidar algo importante", -3],
+  ["🚶 Perderse", -2],
+  ["⏰ Llegar tarde", -1]
+];
+
+const STORAGE_KEY = "caboVerdeCompetition";
+
+let competitionData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+function saveCompetition(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(competitionData));
+}
+
+function optionsHTML(selected = ""){
+  return `<option value="">Sin asignar</option>` + travelPeople.map(name =>
+    `<option value="${name}" ${selected === name ? "selected" : ""}>${name}</option>`
+  ).join("");
+}
+
+function getCurrentDay(){
+  return document.getElementById("competition-day").value;
+}
+
+function ensureDay(day){
+  if(!competitionData[day]){
+    competitionData[day] = {
+      daily:{},
+      mvp:"",
+      special:{}
+    };
+  }
+}
+
+function renderCompetition(){
+  const daySelect = document.getElementById("competition-day");
+  const dailyWrap = document.getElementById("daily-challenges");
+  const specialWrap = document.getElementById("special-points");
+  const mvpSelect = document.getElementById("mvp-select");
+
+  if(!daySelect || !dailyWrap || !specialWrap || !mvpSelect) return;
+
+  daySelect.innerHTML = Array.from({length:travelDays}, (_,i) =>
+    `<option value="day-${i+1}">Día ${i+1}</option>`
+  ).join("");
+
+  daySelect.addEventListener("change", renderDay);
+  renderDay();
+}
+
+function renderDay(){
+  const day = getCurrentDay();
+  ensureDay(day);
+
+  const dailyWrap = document.getElementById("daily-challenges");
+  const specialWrap = document.getElementById("special-points");
+  const mvpSelect = document.getElementById("mvp-select");
+
+  dailyWrap.innerHTML = dailyChallengesData.map(challenge => {
+    const selected = competitionData[day].daily[challenge] || "";
+    return `
+      <div class="competition-row">
+        <strong>${challenge}</strong>
+        <select data-type="daily" data-key="${challenge}">
+          ${optionsHTML(selected)}
+        </select>
+      </div>
+    `;
+  }).join("");
+
+  mvpSelect.innerHTML = optionsHTML(competitionData[day].mvp || "");
+
+  specialWrap.innerHTML = specialPointsData.map(([label, points]) => {
+    const item = competitionData[day].special[label] || {person:"", points};
+    return `
+      <div class="competition-row">
+        <strong>${label} (${points > 0 ? "+" : ""}${points})</strong>
+        <div class="special-controls">
+          <select data-type="special-person" data-key="${label}">
+            ${optionsHTML(item.person)}
+          </select>
+          <input type="number" data-type="special-points" data-key="${label}" value="${item.points}">
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  document.querySelectorAll("[data-type='daily']").forEach(select => {
+    select.addEventListener("change", e => {
+      competitionData[day].daily[e.target.dataset.key] = e.target.value;
+      saveCompetition();
+      updateScoreboard();
+    });
+  });
+
+  mvpSelect.addEventListener("change", e => {
+    competitionData[day].mvp = e.target.value;
+    saveCompetition();
+    updateScoreboard();
+  });
+
+  document.querySelectorAll("[data-type='special-person'], [data-type='special-points']").forEach(input => {
+    input.addEventListener("change", e => {
+      const key = e.target.dataset.key;
+      if(!competitionData[day].special[key]){
+        const base = specialPointsData.find(item => item[0] === key);
+        competitionData[day].special[key] = {person:"", points:base ? base[1] : 0};
+      }
+
+      if(e.target.dataset.type === "special-person"){
+        competitionData[day].special[key].person = e.target.value;
+      } else {
+        competitionData[day].special[key].points = Number(e.target.value);
+      }
+
+      saveCompetition();
+      updateScoreboard();
+    });
+  });
+
+  updateScoreboard();
+}
+
+function updateScoreboard(){
+  const scores = {};
+  travelPeople.forEach(name => scores[name] = 0);
+
+  Object.values(competitionData).forEach(day => {
+    Object.values(day.daily || {}).forEach(person => {
+      if(person) scores[person] += 1;
+    });
+
+    if(day.mvp){
+      scores[day.mvp] += 3;
+    }
+
+    Object.values(day.special || {}).forEach(item => {
+      if(item.person){
+        scores[item.person] += Number(item.points || 0);
+      }
+    });
+  });
+
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+
+  document.getElementById("scoreboard-list").innerHTML = sorted.map(([name, points], index) => `
+    <div class="score-item">
+      <span>${index === 0 ? "👑 " : ""}${name}</span>
+      <span>${points} pts</span>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", renderCompetition);
+</script>
 /* ============================================================
    TABS
    ============================================================ */
